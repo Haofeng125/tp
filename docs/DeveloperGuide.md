@@ -314,14 +314,6 @@ MVP - `* * * *`, High (must have) - `* * *`, Medium (nice to have) - `* *`, Low 
 | `*`        | volunteer                         | get “triage suggestions” based on symptoms   | know whether to monitor, isolate, or escalate (high-risk, needs careful disclaimers)   |
 | `*`        | volunteer                         | use arrow keys (or command history)  | quickly repeat a previous complex command without re-typing it entirely                |
 | `*`        | volunteer                         | keep track of where the cat is last seen (especially if out of its own territory)| track the cat in a more detailed way                                                   |
-
-
-# use short-hand flags (e.g., -n for name, -t for territory)
-
-# use short-hand flags (e.g., -n for name, -t for territory)
-
-# use short-hand flags (e.g., -n for name, -t for territory)
-
 *{More to be added}*
 
 ### Use cases
