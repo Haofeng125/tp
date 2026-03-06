@@ -39,7 +39,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 ### Liu Lexi
 
-<img src="images/lexi.png" width="200px">
+<img src="images/lexiakatiff.png" width="200px">
 
 [[homepage](https://lexi-archive.vercel.app/)]
 [[github](http://github.com/LexiAKAtiff)]
