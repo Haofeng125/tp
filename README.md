@@ -2,16 +2,16 @@
 ## Security
 
 We propose a feature in our [user stories](https://github.com/orgs/AY2526S2-CS2103T-T16-3/projects/1)
-that only **authorized user** can have the access to CatPals. This can be achieved by using 
+that only **authorized user** can have the access to CatPals. This can be achieved by using
 a pair of `UserID` and `UserKey`.
 <br>
 *[To be implemented]*
 
 ## Background
 
-This project is a **brownfield** software engineering project developed by a team of five, 
-based on [AddressBook Level 3 (AB3)](https://se-education.org/addressbook-level3/), 
-a sample desktop application provided by CS2103T course team, AY2526 Sem2. 
+This project is a **brownfield** software engineering project developed by a team of five,
+based on [AddressBook Level 3 (AB3)](https://se-education.org/addressbook-level3/),
+a sample desktop application provided by CS2103T course team, AY2526 Sem2.
 In the sample project, AB3 simulates an ongoing software project with an existing object-oriented codebase, documentation, and architecture, making it a suitable foundation for extension rather than building a product from scratch.
 <br>
 <br>
