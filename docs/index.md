@@ -4,9 +4,9 @@
 ![Java](https://img.shields.io/badge/Java-17-informational)
 [![Made with Jekyll](https://img.shields.io/badge/Jekyll-3.9-blue?logo=jekyll&logoColor=white)](https://jekyllrb.com "Go to Jekyll homepage")
 
-![banner](docs/images/CatPals_banner.png)
+![banner](images/CatPals_banner.png)
 
-![Ui](docs/images/Ui.png)
+![Ui](images/Ui.png)
 
 ![GitHub Created At](https://img.shields.io/github/created-at/lang-jiaqi/tp?color=...)
 ![contributors](https://img.shields.io/badge/contributors-5-brightgreen)
