@@ -1,12 +1,15 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+
 import seedu.address.logic.Messages;
 import seedu.address.model.Model;
 import seedu.address.model.cat.TraitContainsKeywordsPredicate;
 
-import static java.util.Objects.requireNonNull;
 
-
+/**
+ * Finds and lists all cats in CatPals whose traits/tags contain any of the argument keywords.
+ */
 public class FindTraitCommand extends Command {
 
     public static final String COMMAND_WORD = "findtrait";

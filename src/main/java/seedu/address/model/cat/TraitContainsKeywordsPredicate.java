@@ -4,7 +4,8 @@ import java.util.List;
 import java.util.function.Predicate;
 
 /**
- *
+ * Tests that a {@code Cat}'s {@code Tags} matches any of the keywords given.
+ * This is used to filter the cat list based on specific traits (e.g., "friendly", "tabby").
  */
 public class TraitContainsKeywordsPredicate implements Predicate<Cat> {
     private final List<String> keywords;
