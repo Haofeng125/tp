@@ -1,6 +1,5 @@
 package seedu.address.logic.parser;
 
-import static seedu.address.logic.commands.CommandTestUtil.HEALTH_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.HEALTH_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_LOCATION_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
@@ -12,7 +11,6 @@ import static seedu.address.logic.commands.CommandTestUtil.PREAMBLE_NON_EMPTY;
 import static seedu.address.logic.commands.CommandTestUtil.PREAMBLE_WHITESPACE;
 import static seedu.address.logic.commands.CommandTestUtil.TRAIT_DESC_FLUFFY;
 import static seedu.address.logic.commands.CommandTestUtil.TRAIT_DESC_ORANGE;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_HEALTH_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_LOCATION_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TRAIT_FLUFFY;

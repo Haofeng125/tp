@@ -11,7 +11,6 @@ import static seedu.address.logic.commands.CommandTestUtil.TRAIT_DESC_FLUFFY;
 import static seedu.address.logic.commands.CommandTestUtil.TRAIT_DESC_ORANGE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_HEALTH_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_LOCATION_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_LOCATION_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TRAIT_FLUFFY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TRAIT_ORANGE;

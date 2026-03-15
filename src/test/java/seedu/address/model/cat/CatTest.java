@@ -7,8 +7,8 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_LOCATION_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TRAIT_FLUFFY;
 import static seedu.address.testutil.Assert.assertThrows;
-import static seedu.address.testutil.TypicalCats.BOWIE;
 import static seedu.address.testutil.TypicalCats.BOB;
+import static seedu.address.testutil.TypicalCats.BOWIE;
 
 import org.junit.jupiter.api.Test;
 
