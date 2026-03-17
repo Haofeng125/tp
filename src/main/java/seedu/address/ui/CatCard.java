@@ -8,6 +8,8 @@ import javafx.scene.layout.Region;
 import seedu.address.model.cat.Cat;
 import seedu.address.model.cat.Trait;
 
+import java.util.List;
+
 /**
  * An UI component that displays information of a {@code Cat}.
  */
@@ -51,8 +53,20 @@ public class CatCard extends UiPart<Region> {
         name.setText(cat.getName().fullName);
         catLocation.setText(cat.getLocation().value);
         health.setText(cat.getHealth().value);
-        for (Trait trait : cat.getTraits()) {
-            traits.getChildren().add(new Label(trait.traitName));
+        List<Trait> traitSet = cat.getTraits();
+        int totalTraits = traitSet.size();
+        int currentCount = 0;
+
+        for (Trait trait : traitSet) {
+            currentCount++;
+            String traitName = trait.traitName;
+
+            // Add a comma and space if this is not the last trait
+            if (currentCount < totalTraits) {
+                traitName += ", ";
+            }
+
+            traits.getChildren().add(new Label(traitName));
         }
     }
 }
