@@ -5,9 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.Messages.MESSAGE_CATS_LISTED_OVERVIEW;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.testutil.TypicalCats.PIPI;
-import static seedu.address.testutil.TypicalCats.MOCHI;
 import static seedu.address.testutil.TypicalCats.LUNA;
+import static seedu.address.testutil.TypicalCats.MOCHI;
+import static seedu.address.testutil.TypicalCats.PIPI;
 import static seedu.address.testutil.TypicalCats.getTypicalAddressBook;
 
 import java.util.Arrays;
