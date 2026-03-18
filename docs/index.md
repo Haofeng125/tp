@@ -1,17 +1,14 @@
+![banner](docs/images/CatPals_banner.png)
 [![CI Status](https://github.com/AY2526S2-CS2103T-T16-3/tp/workflows/Java%20CI/badge.svg)](https://github.com/AY2526S2-CS2103T-T16-3/tp/actions)
 [![codecov](https://codecov.io/gh/se-edu/addressbook-level3/branch/master/graph/badge.svg)](https://codecov.io/gh/se-edu/addressbook-level3)
-
 ![Java](https://img.shields.io/badge/Java-17-informational)
 [![Made with Jekyll](https://img.shields.io/badge/Jekyll-3.9-blue?logo=jekyll&logoColor=white)](https://jekyllrb.com "Go to Jekyll homepage")
-
-![banner](images/CatPals_banner.png)
-
-![Ui](images/Ui.png)
-
 ![GitHub Created At](https://img.shields.io/github/created-at/lang-jiaqi/tp?color=...)
 ![contributors](https://img.shields.io/badge/contributors-5-brightgreen)
 ![license](https://img.shields.io/github/license/lang-jiaqi/tp.svg?color=bright-green)
 ![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg)
+
+![Ui](docs/images/Ui.png)
 
 ## Table of Contents
 
@@ -56,22 +53,25 @@ Type a command in the command box and press **Enter** to execute it.
 
 ### Command Summary
 
-| Command | Format | Example |
-|---|---|---|
-| **Add** a contact | `add n/NAME p/PHONE e/EMAIL a/ADDRESS [t/TAG]…` | `add n/John Doe p/98765432 e/johnd@example.com a/123 Street` |
-| **List** all contacts | `list` | `list` |
-| **Edit** a contact | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…` | `edit 1 p/91234567 e/new@email.com` |
-| **Find** contacts by name | `find KEYWORD [MORE_KEYWORDS]` | `find John` |
-| **Delete** a contact | `delete INDEX` | `delete 3` |
-| **Clear** all contacts | `clear` | `clear` |
-| **Help** | `help` | `help` |
-| **Exit** | `exit` | `exit` |
+| Command                           | Format                                                                         | Examples                                    |
+|-----------------------------------|--------------------------------------------------------------------------------|---------------------------------------------|
+| **Add** a cat                     | `n/[NAME] t/[TRAIT]… l/[LOCATION] {h/[HEALTH_STATUS]}`                         | `add n/Bowie t/Orange l/Utown h/Vaccinated` |
+| **Delete** a cat by name or index | `delete [CAT_NAME]`or `delete [CAT_NUMBER]`                                    | `delete Snowy` or `delete 3`                |
+| **Edit** a cat by name or index   | `Update [CAT_NAME] [UPDATED_STATUS]` or `Update [CAT_NUMBER] [UPDATED_STATUS]` | `Update Snowy l/utown` or `Update 3 l/PGPR` |
+| **Find** a cat name               | `find KEYWORD`                                                                 | `find Snowy`                                |
+| Find a cat by trait              | `findtrait TRAIT`                                                              | `findtrait Orange`                          |
+| **Clear** all cats                | `clear`                                                                        | `clear`                                     |
+| **List** all cats                 | `list`                                                                         | `list`                                      |
+| **Help**                          | `help`                                                                         | `help`                                      |
+| **Exit** | `exit`                                                                         | `exit`                                      |
 
 ### Notes
-- Parameters in `UPPER_CASE` are supplied by the user (e.g. `n/NAME` → `n/John Doe`).
-- Items in `[square brackets]` are optional.
+- Parameters in `UPPER_CASE` are supplied by the user (e.g. `n/NAME` → `n/Snowy`).
+- Items in `{curly braces}` are optional.
 - Items followed by `…` can be used multiple times or omitted entirely.
-- Parameters can be provided in any order.g
+  <br>e.g. `[t/TAG]…` can be used as `t/white`, `t/white t/small` etc.
+- Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.
+  <br>e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
 ### Data Storage
 Contact data is saved automatically to `[JAR location]/data/addressbook.json` after every change — no manual saving required.

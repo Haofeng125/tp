@@ -113,7 +113,7 @@ Examples:
 
 ### Locating persons by name: `find`
 
-Finds persons whose names contain any of the given keywords.
+Finds cats whose names contain any of the given keywords.
 
 Format: `find [CAT_NAME]`
 
@@ -130,6 +130,20 @@ Examples:
 * `find Snowy` returns `Snowy` and `Snowy white`
 * `find Alex Li` returns `Alex`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
+
+
+### Finding cats by their traits: `findtrait`
+Finds cats whose traits contain any of the given keywords.
+
+Format: `findtrait TRAIT`
+
+* The search is case-sensitive. e.g `orange` will NOT match `Orange`
+* The order of the keywords does not matter. e.g. `orange small` will match `small orange` and `orange small`
+
+Examples:
+
+* `findtrait Orange` returns all cats with the trait `Orange`
+* `findtrait Orange Small` returns all cats with the trait `Orange` or `Small`
 
 ### Deleting a person : `delete`
 
