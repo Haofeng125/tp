@@ -26,26 +26,28 @@ import seedu.address.model.cat.Name;
 import seedu.address.model.cat.Trait;
 
 /**
- * Edits the details of an existing cat in the cat notebook.
+ * Updates the details of an existing cat in the cat notebook.
  */
 public class UpdateCommand extends Command {
 
-    public static final String COMMAND_WORD = "edit";
+    public static final String COMMAND_WORD = "update";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the cat identified "
-            + "by the index number used in the displayed cat list, or by its name. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Updates the details of the cat identified "
+            + "by its name or index number in the displayed cat list. "
             + "Existing values will be overwritten by the input values.\n"
-            + "Parameters: INDEX (must be a positive integer) | NAME "
-            + "[" + PREFIX_NAME + "NAME] "
+            + "Parameters: CAT_NAME [" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_TRAIT + "TRAIT]... "
             + "[" + PREFIX_LOCATION + "LOCATION] "
             + "[" + PREFIX_HEALTH + "HEALTH_STATUS]\n"
-            + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_LOCATION + "Science "
-            + PREFIX_HEALTH + "Vaccinated";
+            + "   OR: INDEX (must be a positive integer) [" + PREFIX_NAME + "NAME] "
+            + "[" + PREFIX_TRAIT + "TRAIT]... "
+            + "[" + PREFIX_LOCATION + "LOCATION] "
+            + "[" + PREFIX_HEALTH + "HEALTH_STATUS]\n"
+            + "Example: " + COMMAND_WORD + " Snowy " + PREFIX_LOCATION + "utown\n"
+            + "Example: " + COMMAND_WORD + " 3 " + PREFIX_LOCATION + "PGPR";
 
     public static final String MESSAGE_EDIT_CAT_SUCCESS = "Updated Cat: %1$s";
-    public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
+    public static final String MESSAGE_NOT_EDITED = "At least one field to update must be provided.";
     public static final String MESSAGE_DUPLICATE_CAT = "This cat already exists in the cat notebook.";
     public static final String MESSAGE_INVALID_CAT_NAME = "The cat name provided is invalid";
 
@@ -54,8 +56,8 @@ public class UpdateCommand extends Command {
     private final EditCatDescriptor editCatDescriptor;
 
     /**
-     * @param index             of the cat in the filtered cat list to edit
-     * @param editCatDescriptor details to edit the cat with
+     * @param index             of the cat in the filtered cat list to update
+     * @param editCatDescriptor details to update the cat with
      */
     public UpdateCommand(Index index, EditCatDescriptor editCatDescriptor) {
         requireNonNull(index);
@@ -67,8 +69,8 @@ public class UpdateCommand extends Command {
     }
 
     /**
-     * @param targetName        name of the cat in the address book to edit
-     * @param editCatDescriptor details to edit the cat with
+     * @param targetName        name of the cat in the address book to update
+     * @param editCatDescriptor details to update the cat with
      */
     public UpdateCommand(Name targetName, EditCatDescriptor editCatDescriptor) {
         requireNonNull(targetName);
@@ -148,7 +150,7 @@ public class UpdateCommand extends Command {
     }
 
     /**
-     * Stores the details to edit the cat with. Each non-empty field value will replace the
+     * Stores the details to update the cat with. Each non-empty field value will replace the
      * corresponding field value of the cat.
      */
     public static class EditCatDescriptor {
@@ -181,21 +183,21 @@ public class UpdateCommand extends Command {
         }
 
         /**
-         * Sets the {@code Name} to edit.
+         * Sets the {@code Name} to update.
          */
         public void setName(Name name) {
             this.name = name;
         }
 
         /**
-         * Returns the {@code Name} to edit, or empty if not set.
+         * Returns the {@code Name} to update, or empty if not set.
          */
         public Optional<Name> getName() {
             return Optional.ofNullable(name);
         }
 
         /**
-         * Sets the {@code traits} list to edit.
+         * Sets the {@code traits} list to update.
          * A defensive copy is stored internally.
          */
         public void setTraits(List<Trait> traits) {
@@ -212,28 +214,28 @@ public class UpdateCommand extends Command {
         }
 
         /**
-         * Sets the {@code Location} to edit.
+         * Sets the {@code Location} to update.
          */
         public void setLocation(Location location) {
             this.location = location;
         }
 
         /**
-         * Returns the {@code Location} to edit, or empty if not set.
+         * Returns the {@code Location} to update, or empty if not set.
          */
         public Optional<Location> getLocation() {
             return Optional.ofNullable(location);
         }
 
         /**
-         * Sets the {@code Health} status to edit.
+         * Sets the {@code Health} status to update.
          */
         public void setHealth(Health health) {
             this.health = health;
         }
 
         /**
-         * Returns the {@code Health} status to edit, or empty if not set.
+         * Returns the {@code Health} status to update, or empty if not set.
          */
         public Optional<Health> getHealth() {
             return Optional.ofNullable(health);
