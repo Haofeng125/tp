@@ -218,8 +218,8 @@ Action | Format, Examples
 --------|------------------
 **Add** | `add n/NAME t/TRAIT [t/MORE_TRAITS]… l/LOCATION [h/HEALTH_STATUS]` <br> e.g., `add n/Bowie t/Orange l/Utown h/Vaccinated`
 **Clear** | `clear`
-**Delete** | `delete INDEX`<br> e.g., `delete 3`
-**Edit** | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
+**Delete** | `delete INDEX(or NAME)`<br> e.g., `delete 3` or `delete Brown`
+**Update** | `update INDEX(or NAME) [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`update 2 n/James Lee e/jameslee@example.com` or `update Brown n/Bigguy t/Purple`
 **Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **List** | `list`
 **Help** | `help`
