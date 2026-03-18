@@ -32,11 +32,17 @@ public class DeleteCommand extends Command {
     private final Index targetIndex;
     private final Name targetName;
 
+    /**
+     * Creates a DeleteCommand to delete the cat at the specified {@code targetIndex}.
+     */
     public DeleteCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
         this.targetName = null;
     }
 
+    /**
+     * Creates a DeleteCommand to delete the cat with the specified {@code targetName} (case-sensitive).
+     */
     public DeleteCommand(Name targetName) {
         this.targetIndex = null;
         this.targetName = targetName;
