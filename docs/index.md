@@ -1,4 +1,4 @@
-![banner](docs/images/CatPals_banner.png)
+![banner](images/CatPals_banner.png)
 [![CI Status](https://github.com/AY2526S2-CS2103T-T16-3/tp/workflows/Java%20CI/badge.svg)](https://github.com/AY2526S2-CS2103T-T16-3/tp/actions)
 [![codecov](https://codecov.io/gh/se-edu/addressbook-level3/branch/master/graph/badge.svg)](https://codecov.io/gh/se-edu/addressbook-level3)
 ![Java](https://img.shields.io/badge/Java-17-informational)
@@ -8,7 +8,7 @@
 ![license](https://img.shields.io/github/license/lang-jiaqi/tp.svg?color=bright-green)
 ![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg)
 
-![Ui](docs/images/Ui.png)
+![Ui](images/Ui.png)
 
 ## Table of Contents
 
