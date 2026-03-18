@@ -58,7 +58,7 @@ Type a command in the command box and press **Enter** to execute it.
 
 | Command | Format | Example |
 |---|---|---|
-| **Add** a contact | `add n/NAME p/PHONE e/EMAIL a/ADDRESS [t/TAG]…` | `add n/John Doe p/98765432 e/johnd@example.com a/123 Street` |
+| **Add** a cat | `add n/NAME t/TRAIT [t/MORE_TRAITS]… l/LOCATION [h/HEALTH_STATUS]` | `add n/Bowie t/Orange l/Utown h/Vaccinated` |
 | **List** all contacts | `list` | `list` |
 | **Edit** a contact | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…` | `edit 1 p/91234567 e/new@email.com` |
 | **Find** contacts by name | `find KEYWORD [MORE_KEYWORDS]` | `find John` |
