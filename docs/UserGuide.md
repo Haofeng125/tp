@@ -81,7 +81,6 @@ Instead, it is a practical record-management tool built specifically for the nee
 
 For more details about the project, please visit the **[CatPals Website](https://ay2526s2-cs2103t-t16-3.github.io/tp/)**.
 
-
 ---
 
 ## Quick start
@@ -97,11 +96,8 @@ For more details about the project, please visit the **[CatPals Website](https:/
    Some example commands you can try:
 
    * `list` : Lists all contacts.
-
    * `add n/Bowie t/Orange l/Utown h/Vaccinated` : Adds a cat named `Bowie` to the cat notebook.
-
    * `delete 3` : Deletes the 3rd contact shown in the current list.
-
    * `clear` : Deletes all contacts.
    * `exit` : Exits the app.
 6. Refer to the [Features](#features) below for details of each command.
@@ -134,7 +130,6 @@ Shows a message explaining how to access the help page.
 
 Format: `help`
 
-
 ### Adding a cat: `add`
 
 Adds a cat profile to the cat notebook.
@@ -150,6 +145,7 @@ A cat can have up to 3 traits (no duplicates). Health status is optional and def
 * You can specify up to 3 `t/TRAIT` prefixes, but duplicate traits are not allowed.
 
 Examples:
+
 * `add n/Bowie t/Orange l/Utown h/Vaccinated`
 * `add n/Whiskers t/Fluffy t/Playful l/Science`
 
@@ -164,7 +160,7 @@ Format: `list`
 Updates an existing cat in the app.
 
 Format:`update INDEX n/NAME t/TRAIT [t/MORE_TRAITS]… l/LOCATION [h/HEALTH_STATUS]`
-or 
+or
 `update CURRENT_NAME n/NAME t/TRAIT [t/MORE_TRAITS]… l/LOCATION [h/HEALTH_STATUS]`
 
 * Updates the cat at the specified `INDEX` or `EXISTING_NAME`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …
@@ -179,23 +175,23 @@ Examples:
 
 ### Locating cats by name: `find`
 
-Finds cats whose names contain any of the given keywords.
+Use the `find` command to search for cats by their names.
 
 Format: `find CAT_NAME`
 
-* The search is case-sensitive. e.g `snowy` will NOT match `Snowy`
-* The order of the keywords does not matter. e.g. `Snowy White` will match `White Snowy`
-* Partial words will be matched e.g. `Han` will match `Hans`
-* Cats matching at least one keyword will be returned (i.e. `OR` search).
-  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-* Names cannot be empty
-* Names cannot contain symbols
+Things to note:
+
+* The search is **case-sensitive**, which means uppercase and lowercase letters are treated differently. For example, `snowy` will **not** match `Snowy`.
+* The order of the keywords does **not** matter. For example, `Snowy White` will match `White Snowy`.
+* You can search using part of a name. For example, `Han` will match `Hans`.
+* A cat will be shown as long as its name matches **at least one** of the keywords you entered. This means the app looks for **any matching keyword**, not necessarily all of them. For example, `Hans Momo` will return `Hans Gruber` and `Momo`.
+* The name field cannot be empty.
+* Names cannot contain symbols.
 
 Examples:
 
-* `find Snowy` returns `Snowy` and `Snowy white`
-* `find Alex Li` returns `Alex`, `David Li`<br>
-  ![result for 'find alex david'](images/findAlexDavidResult.png)
+* `find Snowy` returns `Snowy` and `Snowy White`
+* `find Momo Luna` returns `Momo` and `Luna`
 
 ### Finding cats by their traits: `findtrait`
 
