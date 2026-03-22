@@ -3,9 +3,10 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.cat.NameContainsKeywordsPredicate;
+import seedu.address.model.cat.CatContainsKeywordsPredicate;
 
 /**
  * Finds and lists all cats in address book whose name contains any of the argument keywords.
@@ -15,18 +16,17 @@ public class FindCommand extends Command {
 
     public static final String COMMAND_WORD = "find";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Finds all cats whose names contain any of the specified keywords (case-sensitive)\n"
-            + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
-            + "Example: " + COMMAND_WORD + " Snowy Bow";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds cats based on specific criteria.\n"
+            + "Parameters: n/NAME l/LOCATION t/TRAIT h/HEALTH_STATUS...\n"
+            + "Example: " + COMMAND_WORD + " n/Mochi l/UTown t/calico";
 
-    public static final String MESSAGE_SUCCESS = "These are all the cats that I find for you: ";
+    public static final String MESSAGE_SUCCESS = "These are all the cats that I found for you: ";
     public static final String MESSAGE_NO_MATCH =
             "There is no such profile in my records! Is there a typo?";
 
-    private final NameContainsKeywordsPredicate predicate;
+    private final CatContainsKeywordsPredicate predicate;
 
-    public FindCommand(NameContainsKeywordsPredicate predicate) {
+    public FindCommand(CatContainsKeywordsPredicate predicate) {
         this.predicate = predicate;
     }
 
@@ -34,12 +34,8 @@ public class FindCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
         model.updateFilteredCatList(predicate);
-
-        if (model.getFilteredCatList().isEmpty()) {
-            throw new CommandException(MESSAGE_NO_MATCH);
-        }
-
-        return new CommandResult(MESSAGE_SUCCESS);
+        return new CommandResult(
+                String.format(Messages.MESSAGE_CATS_LISTED_OVERVIEW, model.getFilteredCatList().size()));
     }
 
     @Override

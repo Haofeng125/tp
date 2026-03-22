@@ -1,41 +1,46 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.FindCommand;
-import seedu.address.model.cat.NameContainsKeywordsPredicate;
+import seedu.address.model.cat.CatContainsKeywordsPredicate;
 
 public class FindCommandParserTest {
 
     private final FindCommandParser parser = new FindCommandParser();
 
     @Test
-    public void parse_emptyArg_throwsParseException() {
-        assertParseFailure(parser, "     ",
-                "Name is missing for this find command.");
-    }
-
-    @Test
-    public void parse_invalidSymbols_throwsParseException() {
-        assertParseFailure(parser, "Bowi###e",
-                "The name must not contain symbols");
+    public void parse_invalidPrefix_throwsParseException() {
+        // Random text without a prefix (Preamble only - should fail)
+        assertParseFailure(parser, " Mochi", String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
     }
 
     @Test
     public void parse_validArgs_returnsFindCommand() {
-        FindCommand expectedFindCommand =
-                new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList("Alice", "Bob")));
+        // Single flag
+        CatContainsKeywordsPredicate singleFlagPredicate = new CatContainsKeywordsPredicate(
+                Arrays.asList("Mochi"), Collections.emptyList(),
+                Collections.emptyList(), Collections.emptyList());
+        assertParseSuccess(parser, " n/Mochi", new FindCommand(singleFlagPredicate));
 
-        // normal spaces
-        assertParseSuccess(parser, "Alice Bob", expectedFindCommand);
+        // Multiple flags
+        CatContainsKeywordsPredicate multipleFlagsPredicate = new CatContainsKeywordsPredicate(
+                Arrays.asList("Mochi"), Arrays.asList("UTown"),
+                Arrays.asList("calico"), Collections.emptyList());
+        assertParseSuccess(parser, " n/Mochi l/UTown t/calico", new FindCommand(multipleFlagsPredicate));
 
-        // multiple spaces only
-        assertParseSuccess(parser, "  Alice   Bob  ", expectedFindCommand);
+        // Multiple keywords within flags
+        CatContainsKeywordsPredicate multiKeywordPredicate = new CatContainsKeywordsPredicate(
+                Collections.emptyList(), Collections.emptyList(),
+                Arrays.asList("friendly", "white"), Collections.emptyList());
+        assertParseSuccess(parser, " t/friendly white", new FindCommand(multiKeywordPredicate));
     }
 
 }

@@ -8,8 +8,8 @@ import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
@@ -24,7 +24,7 @@ import seedu.address.logic.commands.UpdateCommand;
 import seedu.address.logic.commands.UpdateCommand.EditCatDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.cat.Cat;
-import seedu.address.model.cat.NameContainsKeywordsPredicate;
+import seedu.address.model.cat.CatContainsKeywordsPredicate;
 import seedu.address.testutil.CatBuilder;
 import seedu.address.testutil.CatUtil;
 import seedu.address.testutil.EditCatDescriptorBuilder;
@@ -70,10 +70,20 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_find() throws Exception {
-        List<String> keywords = Arrays.asList("foo", "bar", "baz");
+        // Define keywords for different fields
+        List<String> nameKeywords = Arrays.asList("foo");
+        List<String> locationKeywords = Collections.singletonList("baz");
+        List<String> traitKeywords = Collections.singletonList("bar");
+
+        // Create the expected predicate with your 4-list constructor
+        CatContainsKeywordsPredicate predicate = new CatContainsKeywordsPredicate(
+                nameKeywords, locationKeywords, traitKeywords, Collections.emptyList());
+
+        // The command string must now include the prefixes n/ and l/
         FindCommand command = (FindCommand) parser.parseCommand(
-                FindCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
-        assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
+                FindCommand.COMMAND_WORD + " n/foo l/baz t/bar");
+
+        assertEquals(new FindCommand(predicate), command);
     }
 
     @Test
