@@ -10,7 +10,6 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
@@ -26,7 +25,6 @@ import seedu.address.logic.commands.UpdateCommand.EditCatDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.cat.Cat;
 import seedu.address.model.cat.CatContainsKeywordsPredicate;
-import seedu.address.model.cat.NameContainsKeywordsPredicate;
 import seedu.address.testutil.CatBuilder;
 import seedu.address.testutil.CatUtil;
 import seedu.address.testutil.EditCatDescriptorBuilder;
