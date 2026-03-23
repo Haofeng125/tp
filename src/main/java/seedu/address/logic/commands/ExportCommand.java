@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -11,6 +12,7 @@ import java.util.List;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.cat.Cat;
+import seedu.address.model.cat.CatImageUtil;
 import seedu.address.model.cat.Trait;
 
 /**
@@ -94,8 +96,9 @@ public class ExportCommand extends Command {
         sb.append("  <div class=\"cat-card\">\n");
 
         // Image column
-        if (cat.getImage().hasImage()) {
-            sb.append("    <img src=\"").append(escapeHtml(cat.getImage().value))
+        File imageFile = CatImageUtil.resolveImageFile(cat);
+        if (imageFile != null) {
+            sb.append("    <img src=\"").append(escapeHtml(imageFile.getPath()))
               .append("\" alt=\"").append(escapeHtml(cat.getName().fullName)).append("\">\n");
         } else {
             sb.append("    <div class=\"no-image\">No image</div>\n");
