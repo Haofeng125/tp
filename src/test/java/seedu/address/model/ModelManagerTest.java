@@ -94,6 +94,36 @@ public class ModelManagerTest {
     }
 
     @Test
+    public void canUndo_initialState_returnsFalse() {
+        assertFalse(modelManager.canUndo());
+    }
+
+    @Test
+    public void saveUndoState_setsCanUndoTrue() {
+        modelManager.saveUndoState();
+        assertTrue(modelManager.canUndo());
+    }
+
+    @Test
+    public void clearUndoState_afterSave_setsCanUndoFalse() {
+        modelManager.saveUndoState();
+        modelManager.clearUndoState();
+        assertFalse(modelManager.canUndo());
+    }
+
+    @Test
+    public void undoLastChange_afterAddCat_restoresPreviousState() {
+        modelManager.saveUndoState();
+        modelManager.addCat(BOWIE);
+        assertTrue(modelManager.hasCat(BOWIE));
+
+        modelManager.undoLastChange();
+
+        assertFalse(modelManager.hasCat(BOWIE));
+        assertFalse(modelManager.canUndo());
+    }
+
+    @Test
     public void equals() {
         AddressBook addressBook = new AddressBookBuilder().withCat(BOWIE).withCat(MOCHI).build();
         AddressBook differentAddressBook = new AddressBook();

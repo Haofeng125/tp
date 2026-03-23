@@ -167,6 +167,26 @@ public class AddCommandTest {
         public void updateFilteredCatList(Predicate<Cat> predicate) {
             throw new AssertionError("This method should not be called.");
         }
+
+        @Override
+        public void saveUndoState() {
+            // undo state is not relevant for most command unit tests
+        }
+
+        @Override
+        public void clearUndoState() {
+            // undo state is not relevant for most command unit tests
+        }
+
+        @Override
+        public boolean canUndo() {
+            return false;
+        }
+
+        @Override
+        public void undoLastChange() {
+            throw new AssertionError("This method should not be called.");
+        }
     }
 
     /**

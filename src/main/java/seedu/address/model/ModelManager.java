@@ -23,6 +23,12 @@ public class ModelManager implements Model {
     private final UserPrefs userPrefs;
     private final FilteredList<Cat> filteredCats;
 
+    /** Snapshot of the address book taken before the last undoable command, or {@code null} if none. */
+    private ReadOnlyAddressBook previousAddressBook = null;
+
+    /** Whether there is a valid undo snapshot available. */
+    private boolean hasUndoableState = false;
+
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
@@ -126,6 +132,34 @@ public class ModelManager implements Model {
     public void updateFilteredCatList(Predicate<Cat> predicate) {
         requireNonNull(predicate);
         filteredCats.setPredicate(predicate);
+    }
+
+    //=========== Undo Support ================================================================================
+
+    @Override
+    public void saveUndoState() {
+        previousAddressBook = new AddressBook(addressBook);
+        hasUndoableState = true;
+    }
+
+    @Override
+    public void clearUndoState() {
+        previousAddressBook = null;
+        hasUndoableState = false;
+    }
+
+    @Override
+    public boolean canUndo() {
+        return hasUndoableState;
+    }
+
+    @Override
+    public void undoLastChange() {
+        assert hasUndoableState && previousAddressBook != null;
+        setAddressBook(previousAddressBook);
+        updateFilteredCatList(PREDICATE_SHOW_ALL_CATS);
+        previousAddressBook = null;
+        hasUndoableState = false;
     }
 
     @Override

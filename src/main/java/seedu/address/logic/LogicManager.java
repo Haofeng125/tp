@@ -9,10 +9,13 @@ import java.util.logging.Logger;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AttachCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.UpdateCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.AddressBookParser;
@@ -58,8 +61,30 @@ public class LogicManager implements Logic {
         return addressBookParser.parseCommand(commandText);
     }
 
+    /**
+     * Returns true if {@code command} is one of the commands whose effect can be undone:
+     * {@code add}, {@code delete}, {@code update}, and {@code attach}.
+     *
+     * @param command the command about to be executed
+     * @return true if the command modifies a single cat entry and is undoable
+     */
+    private boolean isUndoableCommand(Command command) {
+        return command instanceof AddCommand
+                || command instanceof DeleteCommand
+                || command instanceof UpdateCommand
+                || command instanceof AttachCommand;
+    }
+
     @Override
     public CommandResult executeCommand(Command command) throws CommandException {
+        if (isUndoableCommand(command)) {
+            model.saveUndoState();
+        } else if (!(command instanceof UndoCommand)) {
+            // Non-undoable commands (list, find, help, clear, export, etc.) clear the saved state.
+            // UndoCommand is excluded here because it manages the state itself inside execute().
+            model.clearUndoState();
+        }
+
         CommandResult commandResult = command.execute(model);
 
         try {

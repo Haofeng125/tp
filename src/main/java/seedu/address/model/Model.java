@@ -84,4 +84,28 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredCatList(Predicate<Cat> predicate);
+
+    /**
+     * Saves a snapshot of the current address book state so it can be restored by {@link #undoLastChange()}.
+     * Should be called before executing any command that modifies data (add, delete, update, attach).
+     */
+    void saveUndoState();
+
+    /**
+     * Clears the saved undo snapshot. Should be called after executing any command that is not undoable
+     * (e.g. list, find, help, clear, export, undo itself), so that a subsequent {@code undo}
+     * will have no effect.
+     */
+    void clearUndoState();
+
+    /**
+     * Returns true if there is a saved state that can be restored by {@link #undoLastChange()}.
+     */
+    boolean canUndo();
+
+    /**
+     * Restores the address book to the state saved by the most recent {@link #saveUndoState()} call,
+     * then clears the saved state so that consecutive undos have no effect.
+     */
+    void undoLastChange();
 }
