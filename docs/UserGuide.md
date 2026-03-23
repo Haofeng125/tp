@@ -2,7 +2,7 @@
 layout: page
 title: User Guide
 ---
-![banner](../docs/images/CatPals_banner.png)
+![banner](images/CatPals_banner.png)
 
 # Table of Contents
 <!-- TOC -->
