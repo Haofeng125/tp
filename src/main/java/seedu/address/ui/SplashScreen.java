@@ -19,6 +19,9 @@ public class SplashScreen {
     private final Runnable onEnter;
     private boolean proceeded = false;
 
+    /**
+     * Creates a {@code SplashScreen} that calls {@code onEnter} when the user proceeds.
+     */
     public SplashScreen(Stage stage, Runnable onEnter) {
         this.stage = stage;
         this.onEnter = onEnter;

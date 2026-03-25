@@ -42,12 +42,11 @@ public class CatListPanel extends UiPart<Region> {
         // Disable mouse-based selection — navigation is via keyboard only
         catListView.addEventFilter(MouseEvent.MOUSE_PRESSED, javafx.event.Event::consume);
 
-        catListView.getSelectionModel().selectedItemProperty().addListener(
-                (obs, oldCat, newCat) -> {
-                    if (newCat != null) {
-                        onCatSelected.accept(newCat);
-                    }
-                });
+        catListView.getSelectionModel().selectedItemProperty().addListener((obs, oldCat, newCat) -> {
+            if (newCat != null) {
+                onCatSelected.accept(newCat);
+            }
+        });
 
         // Select first cat on initial load — deferred so the scene has fully laid out
         // before displayCat() is called (avoids zero-width rendering bug on first load)
