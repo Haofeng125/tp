@@ -18,25 +18,32 @@
     </columnConstraints>
     <VBox alignment="CENTER_LEFT" minHeight="105" GridPane.columnIndex="0">
       <padding>
-        <Insets top="5" right="5" bottom="5" left="15" />
+        <Insets top="8" right="5" bottom="8" left="14" />
       </padding>
-      <HBox spacing="0.5" alignment="CENTER_LEFT">
-        <Label fx:id="id" styleClass="cell_big_label">
+      <!-- Index + Name row -->
+      <HBox spacing="2" alignment="CENTER_LEFT">
+        <Label fx:id="id" styleClass="cell_index_label">
           <minWidth>
-            <!-- Ensures that the label text is never truncated -->
             <Region fx:constant="USE_PREF_SIZE" />
           </minWidth>
         </Label>
         <Label fx:id="name" text="\$first" styleClass="cell_big_label" />
       </HBox>
-      <FlowPane fx:id="traits" />
+      <!-- Traits pills -->
+      <FlowPane fx:id="traits" id="tags">
+        <padding>
+          <Insets top="4" bottom="2" />
+        </padding>
+      </FlowPane>
+      <!-- Location -->
       <Label fx:id="catLocation" styleClass="cell_small_label" />
+      <!-- Health -->
       <Label fx:id="health" styleClass="cell_small_label" />
     </VBox>
-    <ImageView fx:id="catImage" fitWidth="80" fitHeight="80" preserveRatio="true"
+    <ImageView fx:id="catImage" fitWidth="72" fitHeight="72" preserveRatio="true"
                GridPane.columnIndex="1" GridPane.valignment="CENTER">
       <GridPane.margin>
-        <Insets top="5" right="5" bottom="5" left="5" />
+        <Insets top="5" right="8" bottom="5" left="5" />
       </GridPane.margin>
     </ImageView>
   </GridPane>

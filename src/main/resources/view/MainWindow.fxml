@@ -3,16 +3,14 @@
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Scene?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
 <fx:root type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-         title="CatPals" minWidth="450" minHeight="600" onCloseRequest="#handleExit">
+         title="CatPals" minWidth="620" minHeight="500" onCloseRequest="#handleExit">
   <icons>
     <Image url="@/images/address_book_32.png" />
   </icons>
@@ -23,37 +21,46 @@
         <URL value="@Extensions.css" />
       </stylesheets>
 
-      <VBox>
-        <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
-          <Menu mnemonicParsing="false" text="File">
-            <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
-          </Menu>
-          <Menu mnemonicParsing="false" text="Help">
-            <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
-          </Menu>
-        </MenuBar>
+      <VBox styleClass="background">
 
-        <StackPane VBox.vgrow="NEVER" fx:id="commandBoxPlaceholder" styleClass="pane-with-border">
+        <!-- App header -->
+        <Label fx:id="appHeaderLabel" text="CatPals" id="appHeaderTitle" maxWidth="Infinity" alignment="CENTER"
+               VBox.vgrow="NEVER" />
+
+        <!-- Command input (full width, coral bg, taller) -->
+        <StackPane VBox.vgrow="NEVER" fx:id="commandBoxPlaceholder"
+                   styleClass="pane-with-border" id="commandBoxPlaceholder"
+                   minHeight="58">
+          <padding>
+            <Insets top="10" right="10" bottom="10" left="0" />
+          </padding>
+        </StackPane>
+
+        <!-- Result display (full width, peach bg, no border) -->
+        <StackPane VBox.vgrow="NEVER" fx:id="resultDisplayPlaceholder"
+                   minHeight="50" prefHeight="50" maxHeight="50">
           <padding>
             <Insets top="5" right="10" bottom="5" left="10" />
           </padding>
         </StackPane>
 
-        <StackPane VBox.vgrow="NEVER" fx:id="resultDisplayPlaceholder" styleClass="pane-with-border"
-                   minHeight="100" prefHeight="100" maxHeight="100">
-          <padding>
-            <Insets top="5" right="10" bottom="5" left="10" />
-          </padding>
-        </StackPane>
+        <!-- Two-column split: left sidebar | right detail -->
+        <SplitPane fx:id="mainSplitPane" VBox.vgrow="ALWAYS" dividerPositions="0.35">
 
-        <VBox fx:id="personList" styleClass="pane-with-border" minWidth="340" prefWidth="340" VBox.vgrow="ALWAYS">
-          <padding>
-            <Insets top="10" right="10" bottom="10" left="10" />
-          </padding>
-          <StackPane fx:id="catListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
-        </VBox>
+          <!-- Left: cat name list -->
+          <VBox styleClass="sidebar-panel" minWidth="130">
+            <Label text="Cat Names" styleClass="sidebar-header" maxWidth="Infinity" alignment="CENTER" />
+            <StackPane fx:id="catListPanelPlaceholder" VBox.vgrow="ALWAYS" />
+          </VBox>
 
+          <!-- Right: cat detail -->
+          <StackPane fx:id="catDetailPanelPlaceholder" minWidth="260" styleClass="stack-pane" />
+
+        </SplitPane>
+
+        <!-- Status bar -->
         <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
+
       </VBox>
     </Scene>
   </scene>
