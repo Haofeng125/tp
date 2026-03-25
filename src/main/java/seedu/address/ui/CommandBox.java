@@ -3,6 +3,8 @@ package seedu.address.ui;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -48,6 +50,7 @@ public class CommandBox extends UiPart<Region> {
             }
         } catch (CommandException | ParseException e) {
             setStyleToIndicateCommandFailure();
+            commandTextField.setText("");
         }
     }
 
@@ -69,6 +72,22 @@ public class CommandBox extends UiPart<Region> {
         }
 
         styleClass.add(ERROR_STYLE_CLASS);
+    }
+
+    /**
+     * Registers handlers so that pressing UP/DOWN in the command field navigates the cat list.
+     * This keeps focus in the command box while still allowing list navigation.
+     */
+    public void setListNavigationHandler(Runnable navigateUp, Runnable navigateDown) {
+        commandTextField.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            if (event.getCode() == KeyCode.UP) {
+                navigateUp.run();
+                event.consume();
+            } else if (event.getCode() == KeyCode.DOWN) {
+                navigateDown.run();
+                event.consume();
+            }
+        });
     }
 
     /**

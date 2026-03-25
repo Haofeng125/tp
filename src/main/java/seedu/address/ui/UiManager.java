@@ -35,14 +35,33 @@ public class UiManager implements Ui {
     @Override
     public void start(Stage primaryStage) {
         logger.info("Starting UI...");
-
-        //Set the application icon.
         primaryStage.getIcons().add(getImage(ICON_APPLICATION));
 
+        // Apply saved window dimensions before showing anything
         try {
-            mainWindow = new MainWindow(primaryStage, logic);
-            mainWindow.show(); //This should be called before creating other UI parts
-            mainWindow.fillInnerParts();
+            var guiSettings = logic.getGuiSettings();
+            primaryStage.setWidth(guiSettings.getWindowWidth());
+            primaryStage.setHeight(guiSettings.getWindowHeight());
+            if (guiSettings.getWindowCoordinates() != null) {
+                primaryStage.setX(guiSettings.getWindowCoordinates().getX());
+                primaryStage.setY(guiSettings.getWindowCoordinates().getY());
+            }
+        } catch (Exception e) {
+            logger.warning("Could not read gui settings: " + StringUtil.getDetails(e));
+        }
+
+        try {
+            SplashScreen splashScreen = new SplashScreen(primaryStage, () -> {
+                try {
+                    mainWindow = new MainWindow(primaryStage, logic);
+                    mainWindow.show();
+                    mainWindow.fillInnerParts();
+                } catch (Throwable ex) {
+                    logger.severe(StringUtil.getDetails(ex));
+                    showFatalErrorDialogAndShutdown("Fatal error during initializing", ex);
+                }
+            });
+            splashScreen.show();
 
         } catch (Throwable e) {
             logger.severe(StringUtil.getDetails(e));

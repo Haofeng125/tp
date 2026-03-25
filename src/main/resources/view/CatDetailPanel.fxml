@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<StackPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+           styleClass="detail-panel-root">
+
+  <!-- Shown when no cat is selected -->
+  <Label fx:id="noSelectionLabel"
+         text="~ select a cat to view details ~"
+         styleClass="detail-placeholder" />
+
+  <!-- Full detail content, hidden initially -->
+  <ScrollPane fx:id="detailScrollPane" fitToWidth="true"
+              styleClass="detail-scroll-pane" visible="false">
+    <VBox styleClass="detail-vbox">
+
+      <!-- Main row: text on left, image on right -->
+      <HBox spacing="10">
+
+        <!-- Left: all text fields -->
+<!--        HBox.hgrow="ALWAYS"-->
+        <VBox spacing="3">
+
+          <!-- Name (largest, bold) -->
+          <Label fx:id="catDetailName" styleClass="detail-name-label" wrapText="true" />
+
+          <!-- Separator after name only -->
+          <Separator styleClass="detail-separator">
+            <VBox.margin><Insets top="8" bottom="6" /></VBox.margin>
+          </Separator>
+
+          <!-- Location -->
+          <Label text="Location" styleClass="detail-field-label" />
+          <Label fx:id="catDetailLocation" styleClass="detail-field-value" wrapText="true" />
+
+          <!-- Traits -->
+          <Label text="Traits" styleClass="detail-field-label" />
+          <FlowPane fx:id="catDetailTraits" id="detailTags" hgap="8" vgap="6">
+            <VBox.margin><Insets top="2" bottom="4" /></VBox.margin>
+          </FlowPane>
+
+          <!-- Health (no separator before it) -->
+          <Label text="Health" styleClass="detail-field-label" />
+          <Label fx:id="catDetailHealth" styleClass="detail-field-value" wrapText="true" />
+
+        </VBox>
+
+        <!-- Right: cat image card (always visible, cyan rounded bg) -->
+        <StackPane fx:id="imageContainer" styleClass="detail-image-container"
+                   prefWidth="200" minWidth="200"  maxWidth="200" >
+          <Label fx:id="noImageLabel" styleClass="no-image-label"
+                 text="Add image&#10;to this cat ^^"
+                 wrapText="true" visible="false" />
+          <ImageView fx:id="catDetailImage" fitWidth="180"
+                     preserveRatio="true" />
+        </StackPane>
+
+      </HBox>
+    </VBox>
+  </ScrollPane>
+
+</StackPane>

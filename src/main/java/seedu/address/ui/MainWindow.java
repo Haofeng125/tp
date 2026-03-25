@@ -3,16 +3,18 @@ package seedu.address.ui;
 import java.util.Optional;
 import java.util.logging.Logger;
 
-import javafx.event.ActionEvent;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextInputControl;
+import javafx.scene.control.Label;
+import javafx.scene.control.SplitPane;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
@@ -50,17 +52,24 @@ public class MainWindow extends UiPart<Stage> {
 
     // Independent Ui parts residing in this Ui container
     private CatListPanel catListPanel;
+    private CatDetailPanel catDetailPanel;
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
+
+    @FXML
+    private Label appHeaderLabel;
 
     @FXML
     private StackPane commandBoxPlaceholder;
 
     @FXML
-    private MenuItem helpMenuItem;
+    private StackPane catListPanelPlaceholder;
 
     @FXML
-    private StackPane catListPanelPlaceholder;
+    private StackPane catDetailPanelPlaceholder;
+
+    @FXML
+    private SplitPane mainSplitPane;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -81,8 +90,6 @@ public class MainWindow extends UiPart<Stage> {
         // Configure the UI
         setWindowDefaultSize(logic.getGuiSettings());
 
-        setAccelerators();
-
         helpWindow = new HelpWindow();
     }
 
@@ -90,45 +97,26 @@ public class MainWindow extends UiPart<Stage> {
         return primaryStage;
     }
 
-    private void setAccelerators() {
-        setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
-    }
-
-    /**
-     * Sets the accelerator of a MenuItem.
-     * @param keyCombination the KeyCombination value of the accelerator
-     */
-    private void setAccelerator(MenuItem menuItem, KeyCombination keyCombination) {
-        menuItem.setAccelerator(keyCombination);
-
-        /*
-         * TODO: the code below can be removed once the bug reported here
-         * https://bugs.openjdk.java.net/browse/JDK-8131666
-         * is fixed in later version of SDK.
-         *
-         * According to the bug report, TextInputControl (TextField, TextArea) will
-         * consume function-key events. Because CommandBox contains a TextField, and
-         * ResultDisplay contains a TextArea, thus some accelerators (e.g F1) will
-         * not work when the focus is in them because the key event is consumed by
-         * the TextInputControl(s).
-         *
-         * For now, we add following event filter to capture such key events and open
-         * help window purposely so to support accelerators even when focus is
-         * in CommandBox or ResultDisplay.
-         */
-        getRoot().addEventFilter(KeyEvent.KEY_PRESSED, event -> {
-            if (event.getTarget() instanceof TextInputControl && keyCombination.match(event)) {
-                menuItem.getOnAction().handle(new ActionEvent());
-                event.consume();
-            }
-        });
-    }
-
     /**
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        catListPanel = new CatListPanel(logic.getFilteredCatList());
+        Font momoFont = Font.loadFont(
+                getClass().getResourceAsStream("/view/MomoSignature-Regular.ttf"), 14);
+        if (momoFont != null) {
+            String family = momoFont.getFamily();
+            Platform.runLater(() -> appHeaderLabel.setStyle(
+                    "-fx-font-family: '" + family + "';"
+                    + "-fx-font-size: 56px;"
+                    + "-fx-font-weight: bold;"
+            ));
+        }
+
+        catDetailPanel = new CatDetailPanel();
+        catDetailPanelPlaceholder.getChildren().add(catDetailPanel.getRoot());
+
+        catListPanel = new CatListPanel(logic.getFilteredCatList(),
+                cat -> catDetailPanel.displayCat(cat));
         catListPanelPlaceholder.getChildren().add(catListPanel.getRoot());
 
         resultDisplay = new ResultDisplay();
@@ -139,6 +127,28 @@ public class MainWindow extends UiPart<Stage> {
 
         CommandBox commandBox = new CommandBox(this::executeCommand);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        // UP/DOWN in the command box navigates the cat list (CLI style)
+        commandBox.setListNavigationHandler(
+                catListPanel::selectPrevious,
+                catListPanel::selectNext);
+
+        // Lock the split pane divider so it cannot be dragged
+        Platform.runLater(() -> {
+            for (Node divider : mainSplitPane.lookupAll(".split-pane-divider")) {
+                divider.setMouseTransparent(true);
+                divider.setStyle("-fx-cursor: default;");
+            }
+        });
+
+        // Force a complete layout pass by programmatically nudging the window size.
+        // This works around a JavaFX timing issue where the first layout after
+        // switching from the splash screen leaves some components unsized.
+        Platform.runLater(() -> {
+            primaryStage.setWidth(primaryStage.getWidth() + 1);
+            Platform.runLater(() -> primaryStage.setWidth(primaryStage.getWidth() - 1));
+        });
+
     }
 
     /**
@@ -263,6 +273,9 @@ public class MainWindow extends UiPart<Stage> {
         alert.setTitle("Confirm Update");
         alert.setHeaderText(null);
         alert.setContentText(content);
+        alert.setResizable(true);
+        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+        alert.getDialogPane().setMinWidth(420);
         alert.getDialogPane().getStylesheets().add("view/DarkTheme.css");
 
         // Hide OK and Cancel buttons - user presses Enter/Esc instead
@@ -307,6 +320,9 @@ public class MainWindow extends UiPart<Stage> {
         alert.setTitle("Confirm Delete");
         alert.setHeaderText(null);
         alert.setContentText(content);
+        alert.setResizable(true);
+        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+        alert.getDialogPane().setMinWidth(420);
         alert.getDialogPane().getStylesheets().add("view/DarkTheme.css");
 
         // Hide OK and Cancel buttons - user presses Enter/Esc instead

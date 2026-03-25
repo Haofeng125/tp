@@ -1,17 +1,20 @@
 package seedu.address.ui;
 
+import java.util.function.Consumer;
 import java.util.logging.Logger;
 
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.cat.Cat;
 
 /**
- * Panel containing the list of cats.
+ * Panel containing the sidebar list of cats.
  */
 public class CatListPanel extends UiPart<Region> {
     private static final String FXML = "CatListPanel.fxml";
@@ -21,29 +24,68 @@ public class CatListPanel extends UiPart<Region> {
     private ListView<Cat> catListView;
 
     /**
-     * Creates a {@code CatListPanel} with the given {@code ObservableList}.
+     * Creates a {@code CatListPanel} with no selection callback.
      */
     public CatListPanel(ObservableList<Cat> catList) {
-        super(FXML);
-        catListView.setItems(catList);
-        catListView.setCellFactory(listView -> new CatListViewCell());
+        this(catList, cat -> { });
     }
 
     /**
-     * Custom {@code ListCell} that displays the graphics of a {@code Cat} using a {@code CatCard}.
+     * Creates a {@code CatListPanel} that fires {@code onCatSelected} whenever
+     * the user selects a different cat.
+     */
+    public CatListPanel(ObservableList<Cat> catList, Consumer<Cat> onCatSelected) {
+        super(FXML);
+        catListView.setItems(catList);
+        catListView.setCellFactory(listView -> new CatListViewCell());
+
+        // Disable mouse-based selection — navigation is via keyboard only
+        catListView.addEventFilter(MouseEvent.MOUSE_PRESSED, javafx.event.Event::consume);
+
+        catListView.getSelectionModel().selectedItemProperty().addListener((obs, oldCat, newCat) -> {
+            if (newCat != null) {
+                onCatSelected.accept(newCat);
+            }
+        });
+
+        // Select first cat on initial load — deferred so the scene has fully laid out
+        // before displayCat() is called (avoids zero-width rendering bug on first load)
+        if (!catList.isEmpty()) {
+            Platform.runLater(() -> catListView.getSelectionModel().selectFirst());
+        }
+
+        // Re-select first item if selection is lost after a list change (e.g. find/filter)
+        catList.addListener((javafx.collections.ListChangeListener<Cat>) change -> {
+            if (!catList.isEmpty() && catListView.getSelectionModel().getSelectedItem() == null) {
+                catListView.getSelectionModel().selectFirst();
+            }
+        });
+    }
+
+    /** Moves the selection one item down. */
+    public void selectNext() {
+        catListView.getSelectionModel().selectNext();
+    }
+
+    /** Moves the selection one item up. */
+    public void selectPrevious() {
+        catListView.getSelectionModel().selectPrevious();
+    }
+
+    /**
+     * Custom {@code ListCell} that displays the graphics of a {@code Cat}
+     * using a {@code CatSidebarCard}.
      */
     class CatListViewCell extends ListCell<Cat> {
         @Override
         protected void updateItem(Cat cat, boolean empty) {
             super.updateItem(cat, empty);
-
             if (empty || cat == null) {
                 setGraphic(null);
                 setText(null);
             } else {
-                setGraphic(new CatCard(cat, getIndex() + 1).getRoot());
+                setGraphic(new CatSidebarCard(cat, getIndex() + 1).getRoot());
             }
         }
     }
-
 }
