@@ -8,7 +8,13 @@
 ![license](https://img.shields.io/github/license/lang-jiaqi/tp.svg?color=bright-green)
 ![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg)
 
-![Ui](images/Ui.png)
+<p align="center">
+  <img src="images/main_screen.png" alt="main_screen">
+  <br>
+  <em>This is the main screen of CatPals.</em>
+</p>
+
+
 
 ## Table of Contents
 
