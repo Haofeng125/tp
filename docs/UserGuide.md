@@ -154,7 +154,7 @@ CatPals uses a **warm, keyboard-friendly layout**: commands at the bottom, list 
 On launch you see the welcome screen—press **Space** to continue.
 
 <p align="center">
-  <img src="images/ug_splash_screen.png" alt="CatPals splash screen — press Space to enter" width="72%">
+  <img src="images/splash_screen.png" alt="CatPals splash screen" width="70%">
   <br>
   <em>Welcome screen — press <strong>Space</strong> to open the main window.</em>
 </p>
@@ -162,7 +162,7 @@ On launch you see the welcome screen—press **Space** to continue.
 ### Main window
 
 <p align="center">
-  <img src="images/ug_main_window.png" alt="CatPals main window with cat list and detail panel" width="85%">
+  <img src="images/main_screen.png" alt="CatPals main window" width="70%">
   <br>
   <em>Main window: command row, result line, cat list (left), profile and photo (right), data path (footer).</em>
 </p>
