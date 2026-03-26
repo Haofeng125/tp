@@ -17,6 +17,11 @@ title: User Guide
     * [What is CatPals not designed for?](#what-is-catpals-not-designed-for)
     * [Where can you find more information?](#where-can-you-find-more-information)
   * [Getting Started](#getting-started)
+  * [A Quick Tour of the Interface](#a-quick-tour-of-the-interface)
+    * [The splash screen](#the-splash-screen)
+    * [The main window](#the-main-window)
+    * [Navigating the cat list](#navigating-the-cat-list)
+    * [Confirmation dialogs](#confirmation-dialogs)
   * [Features](#features)
     * [Viewing help : `help`](#viewing-help--help)
     * [Adding a cat: `add`](#adding-a-cat-add)
@@ -169,6 +174,87 @@ Some example commands you can try:
    * `clear` : Deletes all contacts.
    * `exit` : Exits the app. 
 Refer to the [Features](#features) below for details of each command.
+
+---
+
+## A Quick Tour of the Interface
+
+CatPals is built around a **keyboard-first workflow**, but that does not mean the app looks plain. The interface has been designed with a warm, vintage-inspired look to make it pleasant to use day to day. This section walks you through each part of the window so you know exactly what you are looking at before you start entering commands.
+
+---
+
+### The splash screen
+
+When you launch CatPals, you will first see a welcome screen with the CatPals title and tagline. This is the **splash screen**.
+
+To enter the main app, simply press **Space**. The main window will open smoothly.
+
+---
+
+### The main window
+
+Once past the splash screen, the main window appears. It is organised into several areas:
+
+![CatPals UI](images/Ui.png)
+
+**App header**
+The "CatPals" title displayed at the top of the window, styled in a decorative font.
+
+**Cat list panel (left side)**
+A scrollable list of all your cats, displayed along the left side of the window. Each entry shows the cat's index number and name. The currently selected cat is highlighted. This is your at-a-glance overview of all records.
+
+**Cat detail panel (right side)**
+When a cat is selected in the list, its full profile appears on the right. This includes the cat's:
+
+* **Name**
+* **Location** on campus
+* **Health status**
+* **Traits**, shown as coloured tags
+* **Photo**, if one has been attached using the `attach` command
+
+When no cat is selected, this panel shows a placeholder message prompting you to make a selection.
+
+**Result display**
+Located above the command box. After you run a command, the outcome — a success message or an error description — is shown here. This is the main way CatPals communicates back to you.
+
+**Command box**
+The text field at the very bottom of the window. This is where all the action happens — type a command here and press **Enter** to run it. The command box is always ready for input when the app is open.
+
+**Status bar**
+A thin strip at the very bottom of the window, below the command box. It shows the file path where your cat data is currently saved.
+
+---
+
+### Navigating the cat list
+
+CatPals is designed to keep your hands on the keyboard as much as possible. The cat list is navigated using the arrow keys — no mouse clicks needed.
+
+* Press **↑ Up** to move the selection to the previous cat.
+* Press **↓ Down** to move the selection to the next cat.
+
+You can press these keys while your cursor is still in the command box. The selection in the cat list will move, and the detail panel on the right will update automatically to show the selected cat's full profile.
+
+<div markdown="block" class="alert alert-info">
+
+**:information_source: Note:**
+Clicking directly on items in the cat list does not select them. Navigation is intentionally keyboard-driven, so your hands can stay near the command box and you can keep working without reaching for the mouse.
+
+</div>
+
+You can also use the **mouse scroll wheel** to scroll through the cat list if it is longer than the visible area. However, using the arrow keys is generally faster and keeps the detail panel in sync automatically.
+
+---
+
+### Confirmation dialogs
+
+For commands that make significant changes — specifically `update`, `delete`, and `clear` — CatPals will show a **confirmation dialog** before carrying out the action. This gives you a moment to review what is about to happen before committing to it.
+
+When a confirmation dialog appears:
+
+* Press **Enter** to confirm and proceed.
+* Press **Esc** to cancel without making any changes.
+
+No mouse clicks are needed. Just keep your hands on the keyboard :).
 
 ---
 
