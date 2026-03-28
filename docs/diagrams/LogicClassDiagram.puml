@@ -6,12 +6,15 @@ skinparam classBackgroundColor LOGIC_COLOR
 
 package Logic as LogicPackage {
 
-package "Parser Classes" as ParserClasses{
+package "Parser Classes" as ParserClasses {
+Class AddressBookParser
+Class XYZCommandParser
+Class "<<interface>>\nParser<T>" as Parser
 }
+
 Class XYZCommand
 Class CommandResult
 Class "{abstract}\nCommand" as Command
-
 
 Class "<<interface>>\nLogic" as Logic
 Class LogicManager
@@ -22,26 +25,46 @@ Class HiddenModel #FFFFFF
 }
 
 package Storage {
+Class HiddenStorage #FFFFFF
 }
 
 Class HiddenOutside #FFFFFF
 HiddenOutside ..> Logic
 
 LogicManager .right.|> Logic
-LogicManager -right->"1" ParserClasses
-ParserClasses ..> XYZCommand : <<create>>
+LogicManager -right-> "1" AddressBookParser
+
+AddressBookParser ..> XYZCommandParser : <<create>>
+XYZCommandParser .up.|> Parser
+XYZCommandParser ..> XYZCommand : <<create>>
 
 XYZCommand -up-|> Command
 LogicManager .left.> Command : <<call>>
 
-LogicManager --> Model
-LogicManager --> Storage
-Storage --[hidden] Model
-Command .[hidden]up.> Storage
+LogicManager -down-> Model
+LogicManager -down-> Storage
+Model -[hidden]right- Storage
 Command .right.> Model
-note right of XYZCommand: XYZCommand = AddCommand, \nFindCommand, etc
 
 Logic ..> CommandResult
 LogicManager .down.> CommandResult
 Command .up.> CommandResult : <<create>>
+
+note right of XYZCommand
+  XYZCommand = AddCommand,
+  DeleteCommand, UpdateCommand,
+  FindCommand, AttachCommand,
+  ClearCommand, ListCommand,
+  UndoCommand, ExportCommand,
+  HelpCommand, ExitCommand
+end note
+
+note right of XYZCommandParser
+  XYZCommandParser =
+  AddCommandParser,
+  DeleteCommandParser,
+  UpdateCommandParser,
+  FindCommandParser,
+  AttachCommandParser
+end note
 @enduml
