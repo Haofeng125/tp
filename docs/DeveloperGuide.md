@@ -199,6 +199,9 @@ This section describes some noteworthy details on how certain features are imple
 The `add` command allows users to add a new cat profile to the cat notebook. It is implemented via `AddCommand`, which extends `Command`, and `AddCommandParser`, which parses the user's input.
 
 **Format:** `add n/NAME t/TRAIT l/LOCATION [h/HEALTH_STATUS]`
+* `n/NAME`, `t/TRAIT`, and `l/LOCATION` are required.
+* `h/HEALTH_STATUS` is optional.
+* You can specify up to 3 `t/TRAIT` prefixes, but duplicate traits are not allowed.
 
 ![AddSequenceDiagram](images/AddSequenceDiagram.png)
 
