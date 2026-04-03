@@ -51,25 +51,25 @@ title: User Guide
 
 ### What is CatPals?
 
-CatPals is a **desktop app for NUS Cat Café volunteers** to manage stray-cat records on campus: names, locations, traits, health status, and photos—in one place instead of scattered notes or chats.
+CatPals is a **desktop app for NUS Cat Café volunteers** to manage stray-cat records on campus. It keeps names, locations, traits, health status, and photos all in one place, instead of scattered notes or group chats.
 
 ### Why is this app needed?
 
-Lots of cats spread across campus means details get lost in messages and memory. CatPals keeps **one shared-style record** you can **search**, **update**, and **export** when volunteers coordinate care.
+With so many cats spread across campus, details can easily get lost in messages or forgotten over time. CatPals gives volunteers **one organised record** they can **search**, **update**, and **export** whenever they need to coordinate care.
 
 ### Who are the target users?
 
-- **NUS Cat Café CCA** members tracking many campus cats  
-- People who like a **desktop** tool and **keyboard-first** workflows  
-- Anyone okay with typing short commands (no coding knowledge required)
+- **NUS Cat Café CCA** members tracking many campus cats
+- People who prefer a **desktop** tool with **keyboard-first** workflows
+- Anyone comfortable typing short commands (no coding knowledge required)
 
 ### How do users interact with CatPals?
 
-Type commands in the **command box** at the top(e.g. `add`, `find`, `update`). The **list** on the left and **detail** panel on the right update as you work. Use **↑ / ↓** to change the selected cat. When the app opens, the **splash screen** asks you to press **Space** to enter.
+Type commands in the **command box** at the top (e.g. `add`, `find`, `update`). The **list** on the left and **detail** panel on the right update as you work. Use **↑ / ↓** to change the selected cat. When the app opens, the **splash screen** asks you to press **Space** to continue.
 
 ### What value does CatPals provide?
 
-Fast lookup, consistent fields, **HTML export**, and **offline** use. It is **not** a vet system, shelter ops tool, or public registry—just a practical notebook for volunteers.
+CatPals offers fast lookup, consistent fields, **HTML export**, and **offline** use. It is not a vet system, shelter operations tool, or public registry — it is simply a practical notebook for volunteers.
 
 ### Where can you find more information?
 
@@ -79,43 +79,45 @@ Visit the **[CatPals project site](https://ay2526s2-cs2103t-t16-3.github.io/tp/)
 
 ## Getting Started
 
-**Rough time:** **~10 minutes** if **Java 17+** is already installed; add **~5–10 minutes** if you need to install Java. You only need a normal desktop and the steps below—no developer setup.
+**Rough time:** About **10 minutes** if **Java 17+** is already installed. Add roughly **5 to 10 minutes** if you need to install Java first. All you need is a normal desktop computer and the steps below — no developer setup required.
 
 ---
 
 ### 1. Install Java 17 or newer
 
-**CatPals requires Java 17 or higher.** Java is the standard runtime that runs CatPals on your machine—you only need to install it once; you do not need to configure anything else for Java.
+**CatPals requires Java 17 or higher.** Java is the standard runtime that CatPals runs on — you only need to install it once, and you do not need to configure anything else.
 
 **Check what you have:**
 
-* **Windows:** Start → type `cmd` → Enter → run `java -version`
-* **Mac:** `Cmd + Space` → Terminal → `java -version`
+* **Windows:** Start menu, type `cmd`, press Enter, then run `java -version`
+* **Mac:** press `Cmd + Space`, search for Terminal, open it, then run `java -version`
 
-You should see a version **17** or higher (e.g. `17.0.x`). If the command is not recognised or the major version is below 17, install a current JDK:
+You should see a version number of **17** or higher (e.g. `17.0.x`). If the command is not recognised or the major version is below 17, install a current JDK:
 
-* **Recommended:** [Eclipse Temurin 17 (or newer)](https://adoptium.net/) — pick your OS, run the installer, then **open a new terminal** and run `java -version` again to confirm.
+* **Recommended:** [Eclipse Temurin 17 (or newer)](https://adoptium.net/) — pick your OS, run the installer, then **open a new command window** and run `java -version` again to confirm.
 * **Alternative:** [Oracle Java downloads](https://www.oracle.com/java/technologies/downloads/)
 
 ---
 
 ### 2. Download CatPals and make a folder
 
-1. Download the latest **`catpals.jar`** from the **[v1.0 release](https://github.com/AY2526S2-CS2103T-T16-3/tp/releases/tag/branch-release1.0)**.
+1. Download the latest **`catpals.jar`** from the **[latest release](https://github.com/AY2526S2-CS2103T-T16-3/tp/releases)**.
 2. Create a folder (e.g. **`CatPals`** on your Desktop) and move the `.jar` file into it.
 
 ---
 
-### 3. Open a terminal in that folder
+### 3. Open a command window in that folder
 
-* **Windows:** `Win + R` → `cmd` → Enter, then e.g. `cd C:\Users\YourName\Desktop\CatPals`
-* **Mac / Linux:** Terminal → e.g. `cd ~/Desktop/CatPals`
+* **Windows:** Press `Win + R`, type `cmd`, press Enter. Then navigate to your folder, e.g. `cd C:\Users\YourName\Desktop\CatPals`
+* **Mac / Linux:** Open the Terminal app and navigate, e.g. `cd ~/Desktop/CatPals`
 
-Use the real path where your `.jar` lives.
+Use the actual path where your `.jar` file is saved.
 
 ---
 
-### 4. Launch the app
+### 4. Run the app
+
+Type the following command and press Enter:
 
 ```
 java -jar catpals.jar
@@ -123,11 +125,11 @@ java -jar catpals.jar
 
 <div markdown="block" class="alert alert-info">
 
-**:information_source: Note:** If your file is named differently (e.g. `catpals-v1.2.jar`), use that exact name after `-jar`.
+**:information_source: Note:** The file you downloaded should be named `catpals.jar`. If it was saved with a version number in the filename (e.g. `catpals-1.4.jar`), either rename it to `catpals.jar` or replace `catpals.jar` in the command above with the actual filename.
 
 </div>
 
-You should see the **splash screen** first—press **Space** to open the main window ([tour below](#a-quick-tour-of-the-interface)).
+You should see the **splash screen** first — press **Space** to open the main window ([tour below](#a-quick-tour-of-the-interface)).
 
 ---
 
@@ -135,23 +137,23 @@ You should see the **splash screen** first—press **Space** to open the main wi
 
 Try **`help`** in the command box. Other quick examples:
 
-* `list` — show all cats  
-* `add n/Bowie t/Orange l/Utown h/Vaccinated` — add a cat  
-* `delete 3` — delete the **3rd cat** in the **current** list  
-* `clear` — remove every cat (with confirmation)  
-* `exit` — quit  
+* `list` — show all cats
+* `add n/Bowie t/Orange l/Utown h/Vaccinated` — add a cat
+* `delete 3` — delete the **3rd cat** in the **current** list
+* `clear` — remove every cat (with confirmation)
+* `exit` — quit
 
-Full syntax: [Features](#features).
+Full syntax is in the [Features](#features) section.
 
 ---
 
 ## A Quick Tour of the Interface
 
-CatPals uses a **warm, keyboard-friendly layout**: commands at the bottom, list on the left, full profile on the right.
+CatPals uses a **warm, keyboard-friendly layout**: commands at the top, list on the left, full profile on the right.
 
 ### Splash screen
 
-On launch you see the welcome screen—press **Space** to continue.
+On launch you will see the welcome screen — press **Space** to continue.
 
 <p align="center">
   <img src="images/splash_screen.png" alt="CatPals splash screen" width="70%">
@@ -178,13 +180,13 @@ On launch you see the welcome screen—press **Space** to continue.
 
 ### Navigating the cat list
 
-Use **↑** and **↓** to move selection (works even when the cursor is in the command box). The detail panel updates automatically. **Clicking list rows does not select**—use the arrow keys. You can still **scroll** the list with the mouse wheel.
+Use **↑** and **↓** to move the selection (works even when the cursor is in the command box). The detail panel updates automatically. **Clicking list rows does not select** — use the arrow keys. You can still **scroll** the list with the mouse wheel.
 
 ---
 
 ### Confirmation dialogs
 
-For **`update`**, **`delete`**, and **`clear`**, a dialog asks you to confirm. **Enter** confirms; **Esc** cancels. No mouse required. See [Update](#updating-a-cat-profile--update) and [Delete](#deleting-a-cat--delete) for examples.
+For **`update`**, **`delete`**, and **`clear`**, a dialog will ask you to confirm. Press **Enter** to confirm or **Esc** to cancel. No mouse required. See [Update](#updating-a-cat-profile--update) and [Delete](#deleting-a-cat--delete) for examples.
 
 ---
 
@@ -223,18 +225,18 @@ Adds a cat profile to the cat notebook.
 Format: `add n/NAME t/TRAIT [t/MORE_TRAITS]… l/LOCATION [h/HEALTH_STATUS]`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-A cat can have up to 3 traits (no duplicates). Health status is optional and defaults to `Unknown` if not provided.
+A cat can have up to 3 traits. Duplicate traits (traits with the exact same spelling, regardless of spacing) are not allowed. Health status is optional and defaults to `Unknown` if not provided.
 To attach a photo after adding, use the `attach` command.
 </div>
 
 * `n/NAME`, `t/TRAIT`, and `l/LOCATION` are required.
-* `h/HEALTH_STATUS` is optional.
-* You can specify up to 3 `t/TRAIT` prefixes, but duplicate traits are not allowed.
+* `h/HEALTH_STATUS` is optional. Common values include `Vaccinated`, `Neutered`, `Vaccinated and Neutered`, `Injured`, or `Healthy`.
+* You can specify up to 3 `t/TRAIT` prefixes, but duplicate traits (same exact spelling) are not allowed.
 
 Examples:
 
 * `add n/Bowie t/Orange l/Utown h/Vaccinated`
-* `add n/Whiskers t/Fluffy t/Playful l/Science`
+* `add n/Whiskers t/Fluffy t/Playful l/Science h/Neutered`
 
 <p align="center">
   <img src="images/feature_add.png" alt="feature_add" width="70%">
@@ -265,9 +267,15 @@ CatPals/
 
 **Naming your image files**
 
-* Use simple filenames with no spaces, e.g. `bowie.png`, `snowy cat.jpg` → prefer `snowy_cat.jpg`.
+* Use simple filenames with no spaces, e.g. prefer `snowy_cat.jpg` over `snowy cat.jpg`.
 * Supported formats: `.png`, `.jpg`, `.jpeg`.
-* Filenames are **case-sensitive** on Linux/macOS (e.g. `Bowie.png` ≠ `bowie.png`).
+* Filenames are **case-sensitive** on Linux and macOS because those operating systems treat `Bowie.png` and `bowie.png` as two different files. On Windows, filenames are not case-sensitive, but it is good practice to match capitalisation anyway to keep things consistent across computers.
+
+<div markdown="block" class="alert alert-info">
+
+**:information_source: iPhone / HEIC photos:** Photos taken on an iPhone are often saved in HEIC format (`.heic`), which CatPals does not support. Before using an iPhone photo, convert it to `.jpg` or `.png` first. You can do this by opening the photo on a Windows PC and using **Photos > Save as**, or on a Mac by opening it in **Preview** and choosing **File > Export** and selecting JPEG or PNG.
+
+</div>
 
 **Option 1 — Auto-detection (recommended)**
 
@@ -293,10 +301,10 @@ attach Bowie images/bowie.png
 ```
 
 <div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
-CatPals must be launched from the terminal inside your `CatPals` folder (i.e. using `java -jar catpals.jar`) for relative image paths to work correctly. Double-clicking the `.jar` file may cause images not to load.
+CatPals must be launched from the command window inside your `CatPals` folder (i.e. using `java -jar catpals.jar`) for relative image paths to work correctly. Double-clicking the `.jar` file may cause images not to load.
 </div>
 
-If the image file cannot be found at the given path, the cat's card will simply show no photo — the rest of the data is unaffected
+If the image file cannot be found at the given path, the cat's card will simply show no photo — the rest of the data is unaffected.
 
 <p align="center">
 <img src="images/feature_attach.png" alt="feature_attach" width="70%">
@@ -327,15 +335,17 @@ Updates an existing cat in the app.
 | Location      | l/     | Updates the cat's location                                                           |
 | Health Status | h/     | Updates the cat's health status                                                      |
 
+
 * Updates the cat at the specified `INDEX` or `CURRENT_NAME`. The index refers to the index number shown in the displayed cat list. The index **must be a positive integer** 1, 2, 3, …
 * At least one field must be provided.
 * Existing values will be updated to the input values; fields not specified are kept unchanged.
-* To change a cat’s photo, use the `attach` command instead.
+* To change a cat's photo, use the `attach` command instead.
 
 **Examples:**
 
 * `update 1 n/Brownie t/Brown` — Updates the name and trait of the 1st cat.
 * `update Browie n/Brownie t/Brown` — Updates the name of the cat with current name `Browie` to `Brownie`.
+* `update 2 h/Vaccinated and Neutered` — Updates the health status of the 2nd cat.
 
 Before any changes are applied, CatPals will show a confirmation dialog. Press **Enter** to confirm or **Esc** to cancel.
 
@@ -348,23 +358,23 @@ Before any changes are applied, CatPals will show a confirmation dialog. Press *
 <p align="center">
 <img src="images/feature_update.png" alt="feature_update" width="70%">
 <br>
-<em>After confirming, the cat formerly named <code>Browie</code> is updated to <code>Brownie</code></em> 
+<em>After confirming, the cat formerly named <code>Browie</code> is updated to <code>Brownie</code></em>
 
 </p>
 
 ### Locating cats by name, location, traits or health status : `find`
 
-The `find` command is a powerful tool to quickly filter the CatPals database. You can now search for cats based on their **Name**, **Location**, **Traits**, or **Health Status**.
+The `find` command lets you quickly filter the CatPals database. You can search for cats by **Name**, **Location**, **Traits**, or **Health Status**.
 
 Format: `find n/CAT_NAME`, `find l/LOCATION`, `find t/TRAIT`, or `find h/HEALTH_STATUS`
 
 **How it works:**
 
-* The search is case-sensitive. e.g `snowy` will **NOT** match `Snowy`
-* The order of the keywords **do not** matter. e.g. `Snowy White` will match `White Snowy`
+* The search is case-sensitive. For example, `snowy` will **NOT** match `Snowy`. This is intentional: since many cats may have similar names, exact capitalisation matching helps you narrow results to the cat you actually mean.
+* The order of the keywords does not matter. For example, `Snowy White` will match `White Snowy`.
 * Cats matching at least one keyword will be returned (i.e. `OR` search).
   * e.g. `find n/Hans n/Bo` will return `Hans Gruber`, `Bo Yang`
-* Search terms cannot contain symbols
+* Search terms cannot contain symbols.
 
 **Examples:**
 
@@ -427,7 +437,7 @@ Exports the currently displayed cat list to `export.html` in your CatPals folder
 
 Format: `export`
 
-* Exports whatever is currently shown — use `find` first to export a filtered subset, or `list` to export everything.
+* Exports whatever is currently shown. Use `find` first to export a filtered subset, or `list` to export everything.
 * The file is saved as `export.html` in the same folder as `catpals.jar`.
 * Images are embedded using the same paths stored in the app, so they appear correctly as long as the `images/` folder is in the same location.
 
@@ -464,7 +474,7 @@ Because this action permanently removes all your cat data, CatPals will show a c
 
 ### Undo the previous action : `undo`
 
-Reverses **one** data-changing step: the **last** command that actually modified the notebook.
+Reverses one data-changing step: the last command that actually modified the notebook.
 
 Format: `undo`
 
@@ -475,10 +485,10 @@ Format: `undo`
 | [`update`](#updating-a-cat-profile--update) | Restores previous fields |
 | [`attach`](#attaching-a-cat-photo-attach) | Removes the last attached photo (and its copied file where applicable) |
 | [`help`](#viewing-help--help), [`list`](#listing-all-cats-list), [`find`](#locating-cats-by-name-location-traits-or-health-status--find) | No change (read-only) |
-| [`export`](#exporting-the-cat-list--export), [`clear`](#clearing-all-entries--clear) | No change — **not** undoable; `clear` data cannot be recovered with `undo` |
+| [`export`](#exporting-the-cat-list--export), [`clear`](#clearing-all-entries--clear) | No change — **not** undoable; cleared data cannot be recovered with `undo` |
 | [`undo`](#undo-the-previous-action--undo) again | No effect |
 
-**Rules:** Only **one** level of undo. **`export`** files stay on disk even if you `undo` another command afterward.
+**Rules:** Only **one** level of undo is supported. Exported files stay on disk even if you `undo` another command afterward.
 
 ### Exiting the program : `exit`
 
@@ -506,31 +516,31 @@ _Details coming soon ..._
 
 ## FAQ
 
-**Q: How do I move CatPals to another computer?**  
-**A:** Install **Java 17+** on the new machine. Copy your whole **CatPals folder** (the `.jar`, the **`data`** folder, and optionally **`images`**). On the new computer, open a terminal in that folder and run `java -jar catpals.jar` as usual.
+**Q: How do I move CatPals to another computer?**
+**A:** Install **Java 17+** on the new machine. Copy your whole **CatPals folder** (the `.jar`, the **`data`** folder, and optionally **`images`**). On the new computer, open a command window in that folder and run `java -jar catpals.jar` as usual.
 
-**Q: The app says it needs Java / `java` is not recognised.**  
-**A:** Install **JDK 17 or newer** (e.g. from [Adoptium](https://adoptium.net/)). Close and reopen your terminal, then run `java -version`. You must see **17** or higher.
+**Q: The app says it needs Java / `java` is not recognised.**
+**A:** Install **JDK 17 or newer** (e.g. from [Adoptium](https://adoptium.net/)). Close and reopen your command window, then run `java -version`. You must see **17** or higher.
 
-**Q: Double-clicking the `.jar` does nothing or errors.**  
-**A:** Use a **terminal**: `cd` to the folder with `catpals.jar`, then run `java -jar catpals.jar`. That is the supported way to launch; it also fixes **relative paths** for `attach` and photos.
+**Q: Double-clicking the `.jar` does nothing or errors.**
+**A:** Open a **command window**, navigate to the folder with `catpals.jar`, then run `java -jar catpals.jar`. This is the supported way to launch the app and also ensures that **relative paths** for `attach` and photos work correctly.
 
-**Q: I’m stuck on the yellow welcome screen.**  
+**Q: I'm stuck on the yellow welcome screen.**
 **A:** Press the **Space** bar once to enter the main window.
 
-**Q: Where is my data stored?**  
+**Q: Where is my data stored?**
 **A:** In **`data/addressbook.json`** next to `catpals.jar`. Back up that file if you care about your records.
 
-**Q: A command failed or said invalid format.**  
+**Q: A command failed or said invalid format.**
 **A:** Check spelling and prefixes (`n/`, `l/`, `t/`, `h/`). Use **`help`** for an overview. See the [Features](#features) section for exact formats.
 
-**Q: Cat photos do not show / `attach` cannot find the file.**  
-**A:** Put images under an **`images`** folder beside the `.jar`, use paths relative to where you run the app, and launch with **`java -jar`** from that folder (see [Attaching a cat photo](#attaching-a-cat-photo-attach)).
+**Q: Cat photos do not show / `attach` cannot find the file.**
+**A:** Put images under an **`images`** folder beside the `.jar`, use paths relative to where you run the app, and launch with **`java -jar`** from that folder (see [Attaching a cat photo](#attaching-a-cat-photo-attach)). If your photo is from an iPhone, convert it from HEIC to JPG or PNG first.
 
-**Q: Can I use CatPals on my phone?**  
+**Q: Can I use CatPals on my phone?**
 **A:** No. It is a **desktop** Java application for Windows, macOS, or Linux.
 
-**Q: Does CatPals send my data online?**  
+**Q: Does CatPals send my data online?**
 **A:** No. Everything stays in **local files** on your computer unless you copy or export them yourself.
 
 ---
@@ -538,7 +548,8 @@ _Details coming soon ..._
 ## Known issues
 
 1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
-2. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimized, and no new Help Window will appear. The remedy is to manually restore the minimized Help Window.
+2. **If you minimise the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimised, and no new Help Window will appear. The remedy is to manually restore the minimised Help Window.
+3. **If you launch CatPals by double-clicking the `.jar` file**, cat photos may fail to load even if the `images/` folder is set up correctly. This happens because the working directory may not be set to the CatPals folder when launching by double-click. Always launch using `java -jar catpals.jar` from a command window opened inside the CatPals folder.
 
 ---
 
@@ -558,3 +569,13 @@ _Details coming soon ..._
 | **Help**                          | `help`                                                                             | `help`                                                               |
 | **Exit**                          | `exit`                                                                             | `exit`                                                               |
 | **Undo**                          | `undo`                                                                             | `undo`                                                               |
+
+---
+
+## Thank you for using CatPals
+
+We hope CatPals makes it a little easier to look after the cats on campus. Every record you keep helps volunteers stay informed and coordinate care more effectively.
+
+If you run into a bug or have a suggestion, feel free to open an issue on our [GitHub page](https://github.com/AY2526S2-CS2103T-T16-3/tp/issues). We would love to hear from you.
+
+Happy cat-tracking!
