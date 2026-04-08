@@ -269,7 +269,7 @@ CatPals/
 
 * Use simple filenames with no spaces, e.g. prefer `snowy_cat.jpg` over `snowy cat.jpg`.
 * Supported formats: `.png`, `.jpg`, `.jpeg`.
-* Filenames are **case-sensitive** on Linux and macOS because those operating systems treat `Bowie.png` and `bowie.png` as two different files. On Windows, filenames are not case-sensitive, but it is good practice to match capitalisation anyway to keep things consistent across computers.
+* **Case sensitivity depends on your operating system.** Linux and macOS treat `Bowie.png` and `bowie.png` as different files; Windows does not. To avoid surprises, always match capitalisation exactly.
 
 <div markdown="block" class="alert alert-info">
 
@@ -279,19 +279,27 @@ CatPals/
 
 **Option 1 — Auto-detection (recommended)**
 
-Name the image file exactly after the cat (same capitalisation as the name in CatPals), place it in the `images/` folder, and CatPals will pick it up automatically — no command needed.
+Place the image file in the `images/` folder with no `attach` command needed. CatPals automatically searches for it when the cat's card is displayed.
 
+For a cat named `Bowie`, CatPals checks these filenames **in this exact order**, stopping at the first match:
 
-| Cat name in CatPals | File to place in`images/`  |
-| ------------------- | -------------------------- |
-| `Bowie`             | `Bowie.png` or `bowie.png` |
-| `Snowy`             | `Snowy.jpg` or `snowy.jpg` |
+1. `images/Bowie.png`
+2. `images/bowie.png`
+3. `images/Bowie.jpg`
+4. `images/bowie.jpg`
+5. `images/Bowie.jpeg`
+6. `images/bowie.jpeg`
 
-CatPals tries the original capitalisation first, then lowercase, for `.png`, `.jpg`, and `.jpeg`.
+Only the cat's exact name and its all-lowercase form are tried. On **Linux and macOS** (case-sensitive filesystems), no other capitalisation variants (e.g. `BOWIE.png` or `Bowie.PNG`) will be found. On **Windows** (case-insensitive), any capitalisation variant such as `BOWIE.PNG` will also be matched because the OS itself ignores case when looking up files.
+
+| Cat name in CatPals | Files that will be found automatically |
+| ------------------- | -------------------------------------- |
+| `Bowie`             | `Bowie.png`, `bowie.png`, `Bowie.jpg`, `bowie.jpg`, etc. |
+| `Snowy`             | `Snowy.png`, `snowy.png`, `Snowy.jpg`, `snowy.jpg`, etc. |
 
 **Option 2 — Manual path with `attach` (for custom filenames)**
 
-Use the `attach` command to explicitly set any image path for a cat:
+Use the `attach` command to explicitly link any image file to a cat:
 
 Format: `attach INDEX IMAGE_PATH` or `attach CAT_NAME IMAGE_PATH`
 
@@ -299,6 +307,8 @@ Format: `attach INDEX IMAGE_PATH` or `attach CAT_NAME IMAGE_PATH`
 attach 1 images/my_cat_photo.png
 attach Bowie images/bowie.png
 ```
+
+The path you type is stored exactly as-is. CatPals does not modify or normalise it. Whether the file is found on each launch depends on your operating system's case sensitivity — on Linux/macOS, `images/Bowie.png` and `images/bowie.png` are different files; on Windows they are treated as the same.
 
 <div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
 CatPals must be launched from the command window inside your `CatPals` folder (i.e. using `java -jar catpals.jar`) for relative image paths to work correctly. Double-clicking the `.jar` file may cause images not to load.

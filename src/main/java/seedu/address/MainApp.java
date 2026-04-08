@@ -1,7 +1,9 @@
 package seedu.address;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -65,6 +67,8 @@ public class MainApp extends Application {
         logic = new LogicManager(model, storage);
 
         ui = new UiManager(logic);
+
+        initImagesFolder();
     }
 
     /**
@@ -95,6 +99,17 @@ public class MainApp extends Application {
 
     private void initLogging(Config config) {
         LogsCenter.init(config);
+    }
+
+    /**
+     * Creates the images/ folder next to the jar if it does not already exist.
+     */
+    private void initImagesFolder() {
+        try {
+            Files.createDirectories(Paths.get("images"));
+        } catch (IOException e) {
+            logger.warning("Could not create images folder: " + StringUtil.getDetails(e));
+        }
     }
 
     /**
