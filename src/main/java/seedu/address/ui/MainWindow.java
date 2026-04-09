@@ -48,7 +48,7 @@ public class MainWindow extends UiPart<Stage> {
     private static final String CLEAR_CONFIRMATION_ENTRIES = "(%d entries will be removed)";
     private static final String EXPORT_OVERWRITE_HEADER = "%s already exists. Overwrite it?";
     private static final String UNDO_CONFIRMATION_HEADER =
-            "Are you sure you want to undo the previous action?";
+            "Are you sure you want to undo the following command?\n\n> %s";
     private static final String CONFIRMATION_HINT = "\n\nPress Enter to confirm, Esc to cancel.";
 
     private final Logger logger = LogsCenter.getLogger(getClass());
@@ -262,8 +262,9 @@ public class MainWindow extends UiPart<Stage> {
             }
 
             // Show confirmation dialog for undo commands
+            String undoDescription = logic.getLastUndoableCommandDescription().orElse("previous action");
             if (command instanceof UndoCommand && logic.canUndo()
-                    && !showUndoConfirmationDialog()) {
+                    && !showUndoConfirmationDialog(undoDescription)) {
                 return CommandResult.cancelled();
             }
 
@@ -383,13 +384,15 @@ public class MainWindow extends UiPart<Stage> {
 
     /**
      * Shows a confirmation dialog for undo commands.
+     * The dialog tells the user which command will be reversed (e.g. "add", "delete").
      * Enter confirms, Esc cancels. No buttons — user presses keys.
      *
+     * @param commandDescription the command word that will be undone (e.g. "add")
      * @return true if the user confirmed, false if cancelled
      */
-    private boolean showUndoConfirmationDialog() {
-        return showConfirmationDialog("Confirm Undo",
-                UNDO_CONFIRMATION_HEADER + CONFIRMATION_HINT);
+    private boolean showUndoConfirmationDialog(String commandDescription) {
+        String message = String.format(UNDO_CONFIRMATION_HEADER, commandDescription);
+        return showConfirmationDialog("Confirm Undo", message + CONFIRMATION_HINT);
     }
 
     /**

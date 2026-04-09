@@ -1,6 +1,8 @@
 package seedu.address.logic;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_CAT_DISPLAYED_INDEX;
 import static seedu.address.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.CommandTestUtil.HEALTH_DESC_AMY;
@@ -20,6 +22,7 @@ import org.junit.jupiter.api.io.TempDir;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -85,6 +88,70 @@ public class LogicManagerTest {
     @Test
     public void getFilteredCatList_modifyList_throwsUnsupportedOperationException() {
         assertThrows(UnsupportedOperationException.class, () -> logic.getFilteredCatList().remove(0));
+    }
+
+    // ==================== Undo state preservation tests ====================
+
+    @Test
+    public void executeCommand_listAfterAdd_undoStatePreserved() throws Exception {
+        logic.execute(AddCommand.COMMAND_WORD + NAME_DESC_AMY + TRAIT_DESC_ORANGE
+                + LOCATION_DESC_AMY + HEALTH_DESC_AMY);
+        logic.execute(ListCommand.COMMAND_WORD);
+
+        assertTrue(logic.canUndo());
+    }
+
+    @Test
+    public void executeCommand_findAfterAdd_undoStatePreserved() throws Exception {
+        logic.execute(AddCommand.COMMAND_WORD + NAME_DESC_AMY + TRAIT_DESC_ORANGE
+                + LOCATION_DESC_AMY + HEALTH_DESC_AMY);
+        logic.execute(FindCommand.COMMAND_WORD + " n/Amy");
+
+        assertTrue(logic.canUndo());
+    }
+
+    @Test
+    public void executeCommand_clearAfterAdd_undoStateCleared() throws Exception {
+        logic.execute(AddCommand.COMMAND_WORD + NAME_DESC_AMY + TRAIT_DESC_ORANGE
+                + LOCATION_DESC_AMY + HEALTH_DESC_AMY);
+        logic.execute("clear");
+
+        assertFalse(logic.canUndo());
+    }
+
+    // ==================== Undo command description tests ====================
+
+    @Test
+    public void getLastUndoableCommandDescription_noCommandExecuted_isEmpty() {
+        assertTrue(logic.getLastUndoableCommandDescription().isEmpty());
+    }
+
+    @Test
+    public void getLastUndoableCommandDescription_afterAdd_returnsFullCommandText() throws Exception {
+        String addCommand = AddCommand.COMMAND_WORD + NAME_DESC_AMY + TRAIT_DESC_ORANGE
+                + LOCATION_DESC_AMY + HEALTH_DESC_AMY;
+        logic.execute(addCommand);
+
+        assertEquals(addCommand.trim(), logic.getLastUndoableCommandDescription().orElse(""));
+    }
+
+    @Test
+    public void getLastUndoableCommandDescription_afterAddThenList_persistsAcrossReadOnly() throws Exception {
+        String addCommand = AddCommand.COMMAND_WORD + NAME_DESC_AMY + TRAIT_DESC_ORANGE
+                + LOCATION_DESC_AMY + HEALTH_DESC_AMY;
+        logic.execute(addCommand);
+        logic.execute(ListCommand.COMMAND_WORD);
+
+        assertEquals(addCommand.trim(), logic.getLastUndoableCommandDescription().orElse(""));
+    }
+
+    @Test
+    public void getLastUndoableCommandDescription_afterClear_isEmpty() throws Exception {
+        logic.execute(AddCommand.COMMAND_WORD + NAME_DESC_AMY + TRAIT_DESC_ORANGE
+                + LOCATION_DESC_AMY + HEALTH_DESC_AMY);
+        logic.execute("clear");
+
+        assertTrue(logic.getLastUndoableCommandDescription().isEmpty());
     }
 
     /**

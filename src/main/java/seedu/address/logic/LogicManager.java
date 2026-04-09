@@ -15,7 +15,6 @@ import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.DeleteCommand;
-import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.UpdateCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.AddressBookParser;
@@ -27,6 +26,8 @@ import seedu.address.storage.Storage;
 
 /**
  * The main LogicManager of the app.
+ * Manages command parsing, execution, undo state tracking,
+ * and persistence to storage after each command.
  */
 public class LogicManager implements Logic {
     public static final String FILE_OPS_ERROR_FORMAT = "Could not save data due to the following error: %s";
@@ -39,6 +40,15 @@ public class LogicManager implements Logic {
     private final Model model;
     private final Storage storage;
     private final AddressBookParser addressBookParser;
+
+    /**
+     * The full command text of the last undoable command (e.g. "add n/Bowie t/Orange l/Utown"),
+     * shown in the undo confirmation dialog so the user knows exactly what will be reversed.
+     */
+    private String lastUndoableCommandText;
+
+    /** Temporarily holds the raw command text between {@code parseCommand} and {@code executeCommand}. */
+    private String lastParsedCommandText;
 
     /**
      * Constructs a {@code LogicManager} with the given {@code Model} and {@code Storage}.
@@ -58,6 +68,7 @@ public class LogicManager implements Logic {
     @Override
     public Command parseCommand(String commandText) throws ParseException {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
+        lastParsedCommandText = commandText.trim();
         return addressBookParser.parseCommand(commandText);
     }
 
@@ -79,11 +90,16 @@ public class LogicManager implements Logic {
     public CommandResult executeCommand(Command command) throws CommandException {
         if (isUndoableCommand(command)) {
             model.saveUndoState();
-        } else if (!(command instanceof UndoCommand)) {
-            // Non-undoable commands (list, find, help, clear, export, etc.) clear the saved state.
-            // UndoCommand is excluded here because it manages the state itself inside execute().
+            lastUndoableCommandText = lastParsedCommandText;
+        } else if (command instanceof ClearCommand) {
+            // Only clear clears the undo state, because it is a destructive
+            // operation that cannot be meaningfully reversed.
             model.clearUndoState();
+            lastUndoableCommandText = null;
         }
+        // Read-only commands (list, find, help, export, exit) and UndoCommand
+        // leave the undo state untouched so that a previous undoable command
+        // can still be reversed.
 
         CommandResult commandResult = command.execute(model);
 
@@ -127,6 +143,11 @@ public class LogicManager implements Logic {
     @Override
     public boolean canUndo() {
         return model.canUndo();
+    }
+
+    @Override
+    public Optional<String> getLastUndoableCommandDescription() {
+        return Optional.ofNullable(lastUndoableCommandText);
     }
 
     @Override

@@ -35,6 +35,10 @@ public interface Logic {
 
     /**
      * Executes a pre-parsed command and returns the result.
+     * Undoable commands (add, delete, update, attach) save a snapshot before executing.
+     * Read-only commands (list, find, help, export, exit) leave the undo state untouched.
+     * Only {@code clear} clears the undo state, as it is destructive and non-reversible.
+     *
      * @param command The command to execute.
      * @return the result of the command execution.
      * @throws CommandException If an error occurs during command execution.
@@ -71,6 +75,16 @@ public interface Logic {
      * @return true if the most recent undoable command can be reversed
      */
     boolean canUndo();
+
+    /**
+     * Returns the full text of the last undoable command
+     * (e.g. "add n/Bowie t/Orange l/Utown h/Vaccinated"),
+     * or empty if no undoable command has been executed since the last undo or clear.
+     * Used by the UI to show the user exactly what will be reversed in the undo confirmation dialog.
+     *
+     * @return an Optional containing the full command text, or empty if nothing to undo
+     */
+    Optional<String> getLastUndoableCommandDescription();
 
     /**
      * Returns the AddressBook.
