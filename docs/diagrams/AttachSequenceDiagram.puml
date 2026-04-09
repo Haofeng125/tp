@@ -30,8 +30,6 @@ deactivate AttachCommandParser
 AddressBookParser -> AttachCommandParser : parse("1 images/bowie.png")
 activate AttachCommandParser
 
-note right of AttachCommandParser : Split on last space.\nIf last token is "--reset",\ncreate reset AttachCommand.\nOtherwise parse as image path.
-
 create AttachCommand
 AttachCommandParser -> AttachCommand
 activate AttachCommand
@@ -51,33 +49,11 @@ deactivate AddressBookParser
 LogicManager -> AttachCommand : execute(m)
 activate AttachCommand
 
-alt reset == false
-    note right of AttachCommand : Check if image file exists.\nThrow CommandException if not found.
-else reset == true
-    note right of AttachCommand : Skip file check.\nNew image will be empty CatImage\n(triggers auto-detection).
-end
+AttachCommand -> Model : getFilteredCatList()
+activate Model
 
-alt index != null
-
-    AttachCommand -> Model : getFilteredCatList()
-    activate Model
-
-    Model --> AttachCommand : lastShownList
-    deactivate Model
-
-    note right of AttachCommand : Get cat from lastShownList\nby index. Throw\nCommandException if\nindex out of bounds.
-
-else targetName != null
-
-    AttachCommand -> Model : getAddressBook()
-    activate Model
-
-    Model --> AttachCommand : addressBook
-    deactivate Model
-
-    note right of AttachCommand : Search cat by name in\naddressBook.getCatList().\nThrow CommandException\nif not found.
-
-end
+Model --> AttachCommand : lastShownList
+deactivate Model
 
 AttachCommand -> Model : setCat(catToEdit, updatedCat)
 activate Model
@@ -95,6 +71,6 @@ deactivate CommandResult
 AttachCommand --> LogicManager : r
 deactivate AttachCommand
 
-[<--LogicManager
+[<-- LogicManager
 deactivate LogicManager
 @enduml
