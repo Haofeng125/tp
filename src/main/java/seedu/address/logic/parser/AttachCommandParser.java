@@ -11,9 +11,12 @@ import seedu.address.model.cat.Name;
 /**
  * Parses input arguments and creates a new AttachCommand object.
  * Expected format: attach INDEX IMAGE_PATH or attach CAT_NAME IMAGE_PATH
+ *                  attach INDEX --reset   or attach CAT_NAME --reset
  * AI-generated.
  */
 public class AttachCommandParser implements Parser<AttachCommand> {
+
+    public static final String RESET_FLAG = "--reset";
 
     /**
      * Parses the given {@code String} of arguments and returns an AttachCommand.
@@ -22,20 +25,24 @@ public class AttachCommandParser implements Parser<AttachCommand> {
      */
     public AttachCommand parse(String args) throws ParseException {
         String trimmed = args.trim();
-        int spaceIndex = trimmed.indexOf(' ');
+        int lastSpaceIndex = trimmed.lastIndexOf(' ');
 
-        if (spaceIndex == -1) {
+        if (lastSpaceIndex == -1) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AttachCommand.MESSAGE_USAGE));
         }
 
-        String identifier = trimmed.substring(0, spaceIndex).trim();
-        String imagePath = trimmed.substring(spaceIndex + 1).trim();
+        String identifier = trimmed.substring(0, lastSpaceIndex).trim();
+        String second = trimmed.substring(lastSpaceIndex + 1).trim();
 
-        if (identifier.isEmpty() || imagePath.isEmpty()) {
+        if (identifier.isEmpty() || second.isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AttachCommand.MESSAGE_USAGE));
         }
 
-        CatImage image = ParserUtil.parseImage(imagePath);
+        if (second.equals(RESET_FLAG)) {
+            return parseReset(identifier);
+        }
+
+        CatImage image = ParserUtil.parseImage(second);
 
         // Try to parse identifier as index first, fall back to name
         try {
@@ -49,5 +56,22 @@ public class AttachCommandParser implements Parser<AttachCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AttachCommand.MESSAGE_USAGE));
         }
         return new AttachCommand(new Name(identifier), image);
+    }
+
+    /**
+     * Parses a reset command for the given identifier (index or name).
+     */
+    private AttachCommand parseReset(String identifier) throws ParseException {
+        try {
+            Index index = ParserUtil.parseIndex(identifier);
+            return new AttachCommand(index);
+        } catch (ParseException ignored) {
+            // Not a valid index — try as cat name
+        }
+
+        if (!Name.isValidName(identifier)) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AttachCommand.MESSAGE_USAGE));
+        }
+        return new AttachCommand(new Name(identifier));
     }
 }
