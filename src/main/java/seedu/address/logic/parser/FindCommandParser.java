@@ -89,7 +89,8 @@ public class FindCommandParser implements Parser<FindCommand> {
                 // Only check for empty keywords (Fixes Issue #186)
                 if (value.trim().isEmpty()) {
                     logger.warning("User provided an empty keyword for flag: " + prefix);
-                    throw new ParseException("Search keyword cannot be empty. Please provide a valid search term (e.g., n/Mochi).");
+                    throw new ParseException("Search keyword cannot be empty. "
+                            + "Please provide a valid search term (e.g., n/Mochi).");
                 }
             }
         }
