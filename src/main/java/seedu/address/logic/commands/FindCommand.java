@@ -9,7 +9,7 @@ import seedu.address.model.cat.CatContainsKeywordsPredicate;
 
 /**
  * Finds and lists all cats in address book whose name contains any of the argument keywords.
- * Keyword matching is case sensitive.
+ * Keyword matching is case-insensitive.
  */
 public class FindCommand extends Command {
 
