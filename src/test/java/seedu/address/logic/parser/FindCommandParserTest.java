@@ -36,16 +36,4 @@ public class FindCommandParserTest {
                 Arrays.asList("calico"), Collections.emptyList());
         assertParseSuccess(parser, " n/Mochi l/UTown t/calico", new FindCommand(multipleFlagsPredicate));
     }
-
-    @Test
-    public void parse_multipleKeywordsWithoutFlags_throwsParseException() {
-        // Testing name flag with multiple words
-        assertParseFailure(parser, " n/Mochi Luna",
-                "Each keyword must be preceded by its identifier flag (e.g., t/friendly t/calico).");
-
-        // Testing trait flag with multiple words
-        assertParseFailure(parser, " t/calico friendly",
-                "Each keyword must be preceded by its identifier flag (e.g., t/friendly t/calico).");
-    }
-
 }

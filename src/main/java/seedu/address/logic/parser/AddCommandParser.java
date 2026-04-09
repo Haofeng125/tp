@@ -6,6 +6,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TRAIT;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import seedu.address.logic.commands.AddCommand;
@@ -21,6 +23,7 @@ import seedu.address.model.cat.Trait;
  * Parses input arguments and creates a new AddCommand object
  */
 public class AddCommandParser implements Parser<AddCommand> {
+    private static final Pattern UPDATE_PREFIX_PATTERN = Pattern.compile("(?i)(^|\\s)([ntlh])/");
 
     /**
      * Parses the given {@code String} of arguments in the context of the AddCommand
@@ -28,8 +31,10 @@ public class AddCommandParser implements Parser<AddCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public AddCommand parse(String args) throws ParseException {
+        String normalizedArgs = normalizeUpdatePrefixes(args);
+
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_TRAIT, PREFIX_LOCATION, PREFIX_HEALTH);
+                ArgumentTokenizer.tokenize(normalizedArgs, PREFIX_NAME, PREFIX_TRAIT, PREFIX_LOCATION, PREFIX_HEALTH);
 
         // Check required fields are present first (before preamble check)
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_LOCATION)) {
@@ -66,6 +71,20 @@ public class AddCommandParser implements Parser<AddCommand> {
 
         Cat cat = new Cat(name, traits, location, health, new CatImage(CatImage.DEFAULT_VALUE));
         return new AddCommand(cat);
+    }
+
+    /**
+     * Normalizes update field prefixes to lowercase so n/t/l/h are case-insensitive.
+     */
+    private String normalizeUpdatePrefixes(String args) {
+        Matcher matcher = UPDATE_PREFIX_PATTERN.matcher(args);
+        StringBuffer normalized = new StringBuffer();
+        while (matcher.find()) {
+            matcher.appendReplacement(normalized, Matcher.quoteReplacement(
+                    matcher.group(1) + matcher.group(2).toLowerCase() + "/"));
+        }
+        matcher.appendTail(normalized);
+        return normalized.toString();
     }
 
     /**
