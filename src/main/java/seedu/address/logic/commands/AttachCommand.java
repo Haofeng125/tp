@@ -36,8 +36,8 @@ public class AttachCommand extends Command {
     public static final String MESSAGE_RESET_SUCCESS = "Image reset for cat: %1$s";
     public static final String MESSAGE_CAT_NOT_FOUND = "No cat with the name '%1$s' found.";
     public static final String MESSAGE_FILE_NOT_FOUND = "Image file not found: %1$s";
-    public static final String MESSAGE_FILE_FORMAT_INCORRECT = "Image file does not have the correct format: %1$s. " +
-            "Please use .jpg, .png, or .jpeg file.";
+    public static final String MESSAGE_FILE_FORMAT_INCORRECT = "Image file does not have the correct format: %1$s. "
+            + "Please use .jpg, .png, or .jpeg file.";
 
     private final Index index;
     private final Name targetName;
