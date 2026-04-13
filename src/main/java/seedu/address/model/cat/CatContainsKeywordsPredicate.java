@@ -44,7 +44,7 @@ public class CatContainsKeywordsPredicate implements Predicate<Cat> {
                         .anyMatch(trait -> trait.traitName.toLowerCase().contains(keyword.toLowerCase())));
 
         boolean matchesHealth = healthKeywords.isEmpty() || healthKeywords.stream()
-                .anyMatch(keyword -> cat.getHealth().value.toLowerCase().contains(keyword.toLowerCase()));
+                .anyMatch(keyword -> cat.getHealth().value.trim().equalsIgnoreCase(keyword.trim()));
 
         // Returns true only if the cat matches ALL specified criteria (AND logic)
         return matchesName && matchesLocation && matchesTraits && matchesHealth;
