@@ -106,7 +106,7 @@ You should see a version number of **17** or higher (e.g. `17.0.x`). If the comm
 
 ---
 
-### 3. Open a command window in that folder
+### 3. Open a command window and navigate to that folder
 
 * **Windows:** Press `Win + R`, type `cmd`, press Enter. Then navigate to your folder, e.g. `cd C:\Users\YourName\Desktop\CatPals`
 * **Mac / Linux:** Open the Terminal app and navigate, e.g. `cd ~/Desktop/CatPals`
@@ -117,12 +117,12 @@ Use the actual path where your `.jar` file is saved.
 
 ### 4. Run the app
 
-Type the following command and press Enter:
+Type the following command after you navigate to the folder where catpals.jar is (as stated in step 3) and press Enter:
 
 ```
 java -jar catpals.jar
 ```
-
+You have to run this command after following the step 3 above, otherwise unexpected behaviors will affect your app experience.
 <div markdown="block" class="alert alert-info">
 
 **:information_source: Note:** The file you downloaded should be named `catpals.jar`. If it was saved with a version number in the filename (e.g. `catpals-1.4.jar`), either rename it to `catpals.jar` or replace `catpals.jar` in the command above with the actual filename.
@@ -317,7 +317,7 @@ The path you type is stored exactly as-is. CatPals does not modify or normalise 
 CatPals must be launched from the command window inside your `CatPals` folder (i.e. using `java -jar catpals.jar`) for relative image paths to work correctly. Double-clicking the `.jar` file may cause images not to load.
 </div>
 
-If the image file cannot be found at the given path, the cat's card will simply show no photo, while the rest of the data is unaffected.
+If the image file cannot be found at the given path, or the image file does not have the correct format, the attach command will fail fast with an error message.
 
 **Resetting to auto-detection**
 

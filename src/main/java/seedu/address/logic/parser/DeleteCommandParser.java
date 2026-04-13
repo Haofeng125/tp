@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.logic.Messages.MESSAGE_INVALID_CAT_DISPLAYED_INDEX;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import seedu.address.commons.core.index.Index;
@@ -30,7 +31,11 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
             Index index = ParserUtil.parseIndex(trimmed);
             return new DeleteCommand(index);
         } catch (ParseException ignored) {
-            // Not a valid index — fall through to name parsing
+            // If input looks like a number (e.g. 0, -1), it's an invalid index — not a name
+            if (trimmed.matches("-?\\d+")) {
+                throw new ParseException(MESSAGE_INVALID_CAT_DISPLAYED_INDEX);
+            }
+            // Not a number — fall through to name parsing
         }
 
         // Try to parse as a cat name

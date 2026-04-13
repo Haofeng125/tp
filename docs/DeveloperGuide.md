@@ -881,23 +881,23 @@ MVP - `* * * *`, High (must have) - `* * *`, Medium (nice to have) - `* *`, Low 
 
 ### Portability
 
-- Should support exporting data in CSV or JSON format for backup or migration purposes.
+- The system's data should be exportable to open, human-readable formats
+  (e.g. HTML) to facilitate backup, migration, and interoperability
+  with other systems.
 
 *{More to be added}*
 
 ### Glossary
 
 * **Mainstream OS**: Windows, Linux, Unix, MacOS
-* **Private contact detail**: A contact detail that is not meant to be shared with others
 * **JavaFX**: A Java library used to build the graphical user interface (GUI) of this application
 * **FXML**: An XML-based file format used by JavaFX to define the layout and structure of UI components separately from application logic
 * **Component**: A self-contained, replaceable part of the application (e.g., UI, Logic, Model, Storage), each responsible for a distinct concern and communicating with others only through defined interfaces
 * **Coupling**: The degree of dependency between components. Low coupling is preferred, as it means changes to one component are less likely to break others
-* **Model**: The component that holds all in-memory application data (contacts, user preferences)
+* **Model**: The component that holds all in-memory application data (cat entries)
 * **ObservableList**: A JavaFX list that automatically notifies listeners (such as the UI) when its contents change, enabling the display to refresh without manual intervention
-* **Filtered List**: A view of the full contact list showing only entries that match current search criteria. It updates dynamically as the underlying data or filter changes\
-* **State/Address book state**: A complete snapshot of the address book's data at a given point in time. Used by the undo feature to restore the previous version
-* **Undo snapshot**: A deep copy of the address book saved by `Model#saveUndoState()` before an undoable command executes. Only one snapshot is kept at a time (single-level undo)
+* **Filtered List**: A view of the full entry list showing only entries that match current search criteria. It updates dynamically as the underlying data or filter changes
+* **State/CatPals state**: A complete snapshot of the application's data at a given point in time. Used by the undo feature to restore previous versions
 * **Sequence Diagram**: A UML diagram showing how objects interact with each other in a specific time-ordered sequence of method calls
 * **Activity diagram**: A UML diagram showing the flow of control through a process, including decision points and parallel actions
 * **Class diagram**: A UML diagram showing the structure of classes, their attributes, methods, and relationships (e.g., inheritance, association)
