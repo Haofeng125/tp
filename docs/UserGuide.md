@@ -232,7 +232,7 @@ To attach a photo after adding, use the `attach` command.
 
 <div markdown="span" class="alert alert-warning">:exclamation: **Caution: Input trimming and character limits**
 All input fields (name, trait, location, health status) are automatically trimmed before being stored — leading/trailing spaces are removed and consecutive spaces within a value are collapsed into a single space. Character limits are counted **after** this trimming (i.e., based on the cleaned-up value that is actually stored). This applies to all commands that accept these fields (e.g., `add`, `update`).<br>
-For example: `t/long    tail` is stored as `t/long tail` (9 characters, not 13). So `t/long tail` and `t/long    tail` are treated as the **same** trait. Similarly, `l/Utown Residence` and `l/Utown  Residence` refer to the **same** location. However, `l/Utown Residence` and `l/U town Residence` are **different** because the words themselves differ.
+For example: <code>t/long&nbsp;&nbsp;&nbsp;&nbsp;tail</code> is stored as `t/long tail` (9 characters, not 13). So `t/long tail` and <code>t/long&nbsp;&nbsp;&nbsp;&nbsp;tail</code> are treated as the **same** trait. Similarly, `l/Utown Residence` and <code>l/Utown&nbsp;&nbsp;&nbsp;&nbsp;Residence</code> refer to the **same** location. However, `l/Utown Residence` and `l/U town Residence` are **different** because the words themselves differ.
 </div>
 
 * `n/NAME`, `t/TRAIT`, and `l/LOCATION` are required.
@@ -279,7 +279,7 @@ CatPals/
 
 **Naming your image files**
 
-* Use simple filenames with no spaces, e.g. prefer `snowy_cat.jpg` over `snowy cat.jpg`.
+* Use simple filenames with **no spaces**, e.g. prefer `snowy_cat.jpg` over `snowy cat.jpg`.
 * Supported formats: `.png`, `.jpg`, `.jpeg`.
 * **Case sensitivity depends on your operating system.** Linux and macOS treat `Bowie.png` and `bowie.png` as different files; Windows does not. To avoid surprises, always match capitalisation exactly.
 
@@ -391,7 +391,7 @@ If a name contains a word starting with `n/`, `t/`, `l/`, or `h/`, the command w
 
 <div markdown="span" class="alert alert-warning">:exclamation: **Caution: Input trimming and character limits**
 All input fields (name, trait, location, health status) are automatically trimmed before being stored — leading/trailing spaces are removed and consecutive spaces within a value are collapsed into a single space. Character limits are counted **after** this trimming (i.e., based on the cleaned-up value that is actually stored). This applies to all commands that accept these fields (e.g., `add`, `update`).<br>
-For example: `t/long    tail` is stored as `t/long tail` (9 characters, not 13). So `t/long tail` and `t/long    tail` are treated as the **same** trait. Similarly, `l/Utown Residence` and `l/Utown    Residence` refer to the **same** location. However, `l/Utown Residence` and `l/U town Residence` are **different** because the words themselves differ.<br>
+For example: <code>t/long&nbsp;&nbsp;&nbsp;&nbsp;tail</code> is stored as `t/long tail` (9 characters, not 13). So `t/long tail` and <code>t/long&nbsp;&nbsp;&nbsp;&nbsp;tail</code> are treated as the **same** trait. Similarly, `l/Utown Residence` and <code>l/Utown&nbsp;&nbsp;&nbsp;&nbsp;Residence</code> refer to the **same** location. However, `l/Utown Residence` and `l/U town Residence` are **different** because the words themselves differ.<br>
 Character limits — Name: **30**, Trait: **50**, Location: **50**, Health Status: **50**.
 </div>
 
@@ -461,7 +461,7 @@ not t/friendly white.
 
 ### Deleting a cat : `delete`
 
-Deletes the specified cat from the list.
+Deletes the specified cat from the current list that is in display (Either a full list or a list filtered by "find" command).
 
 Format: `delete INDEX` or `delete NAME`
 
