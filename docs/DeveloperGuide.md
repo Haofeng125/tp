@@ -743,7 +743,7 @@ MVP - `* * * *`, High (must have) - `* * *`, Medium (nice to have) - `* *`, Low 
     * 3a2a. CatPals shows an error message: "The name must not contain symbols!".
       Use case ends.
   * 3a3. The name does not match any cat in CatPals.
-    * 3a3a. CatPals shows an error message: "No such profile is found in my records. Please ensure the cat’s name is spelled correctly.".
+    * 3a3a. CatPals shows an error message: "No cat with that name was found.".
       Use case ends.
 * 3b. The user requests to update by index.
 
