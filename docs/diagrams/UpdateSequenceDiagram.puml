@@ -73,13 +73,13 @@ alt index != null
 
 else targetName != null
 
-    UpdateCommand -> Model : getAddressBook()
+    UpdateCommand -> Model : getFilteredCatList()
     activate Model
 
-    Model --> UpdateCommand : addressBook
+    Model --> UpdateCommand : lastShownList
     deactivate Model
 
-    note right of UpdateCommand : Find cat by name in\naddressBook.getCatList()\n(case-insensitive).\nThrow CommandException\nif not found.
+    note right of UpdateCommand : Find cat by name in\nfiltered list\n(case-insensitive).\nThrow CommandException\nif not found.
 
 end
 
@@ -99,11 +99,13 @@ activate Model
 Model --> UpdateCommand
 deactivate Model
 
-UpdateCommand -> Model : updateFilteredCatList(show all cats)
-activate Model
+opt editedCat no longer matches current filter
+    UpdateCommand -> Model : updateFilteredCatList(keep editedCat visible)
+    activate Model
 
-Model --> UpdateCommand
-deactivate Model
+    Model --> UpdateCommand
+    deactivate Model
+end
 
 create CommandResult
 UpdateCommand -> CommandResult

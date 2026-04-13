@@ -282,7 +282,7 @@ The `delete` command works as follows:
 
 ### Update feature
 
-The `update` command allows users to change an existing cat’s name, traits, location, or health status. The cat is identified either by **index** (position in the **currently displayed** list) or by **name** (matched against the full cat list). It is implemented via `UpdateCommand`, which extends `Command`, and `UpdateCommandParser`, which parses the user’s input.
+The `update` command allows users to change an existing cat’s name, traits, location, or health status. The cat is identified either by **index** or by **name**, both matched against the **currently displayed (filtered) list**. It is implemented via `UpdateCommand`, which extends `Command`, and `UpdateCommandParser`, which parses the user’s input.
 
 **Format:** `update CAT_NAME [n/NAME] [t/TRAIT]... [l/LOCATION] [h/HEALTH_STATUS]` **or** `update INDEX [n/NAME] [t/TRAIT]... [l/LOCATION] [h/HEALTH_STATUS]`
 
@@ -291,7 +291,7 @@ The `update` command allows users to change an existing cat’s name, traits, lo
 * Duplicate `n/`, `l/`, or `h/` prefixes in one command are rejected via `ArgumentMultimap#verifyNoDuplicatePrefixesFor`.
 * Multiple `t/TRAIT` prefixes are allowed (subject to the usual cap of three traits and no duplicates within the parsed list).
 * Supplying `t/` **replaces** the cat’s entire trait list with the traits given in that command. To keep existing traits, the user must include them again alongside any new ones. A lone `t/` with no value clears all traits (parsed as an empty trait list).
-* If the target is specified by **name**, lookup is **case-insensitive** (`equalsIgnoreCase` on the full name). If no cat matches, a `CommandException` is thrown with `UpdateCommand.MESSAGE_INVALID_CAT_NAME`.
+* If the target is specified by **name**, lookup is **case-insensitive** (`equalsIgnoreCase` on the full name) and searches the **filtered list** (`Model#getFilteredCatList()`). If no cat matches, a `CommandException` is thrown with `UpdateCommand.MESSAGE_INVALID_CAT_NAME`.
 * If the target is specified by **index**, it refers to the **filtered** list (`Model#getFilteredCatList()`). An out-of-bounds index results in `Messages.MESSAGE_INVALID_CAT_DISPLAYED_INDEX`.
 * After applying edits, if the updated cat would duplicate another cat’s identity (same name as a different entry), `Model#hasCat` causes a `CommandException` with `UpdateCommand.MESSAGE_DUPLICATE_CAT`.
 
@@ -307,8 +307,8 @@ The `update` command works as follows:
 1. `LogicManager` receives the command string and delegates parsing to `AddressBookParser`.
 2. `AddressBookParser` identifies the `update` keyword and creates an `UpdateCommandParser`, which normalizes prefix casing, tokenizes arguments, and parses the preamble as either an index or a valid `Name`, together with an `EditCatDescriptor` for the fields to change.
 3. `LogicManager` calls `UpdateCommand#execute(model)`.
-4. `UpdateCommand` resolves the cat to edit from the filtered list (by index) or from the address book’s full cat list (by name), then builds an updated `Cat` via `createEditedCat`, merging descriptor fields with the existing cat.
-5. Duplicate-name checks and `Model#setCat` are applied; the filtered list is reset to show all cats (`PREDICATE_SHOW_ALL_CATS`).
+4. `UpdateCommand` resolves the cat to edit from the filtered list (by both index and name), then builds an updated `Cat` via `createEditedCat`, merging descriptor fields with the existing cat.
+5. Duplicate-name checks and `Model#setCat` are applied. If the updated cat no longer matches the current filter predicate, the filtered list is updated to keep the edited cat visible alongside the other filtered results.
 6. A `CommandResult` is returned with a success message.
 
 ### Find feature
@@ -438,16 +438,18 @@ The mechanism exposes the following operations via the `Model` interface:
 * `Model#clearUndoState()` — Clears the saved snapshot. Only called after `clear`, since it is a destructive non-reversible command.
 * `Model#canUndo()` — Returns true if there is a saved snapshot available.
 * `Model#undoLastChange()` — Restores the address book to the saved snapshot and clears it.
+* `Model#getUndoSnapshot()` — Returns the current undo snapshot (used for rollback on command failure).
+* `Model#setUndoSnapshot(snapshot, hasState)` — Restores a previous undo snapshot (used for rollback on command failure).
 
 Given below is an example usage scenario and how the undo mechanism behaves at each step.
 
 Step 1. The user launches the application for the first time. No undo snapshot exists yet (`previousAddressBook` is `null`, `hasUndoableState` is `false`).
 
-Step 2. The user executes `add n/Mochi t/Calico l/UTown` to add a new cat. Before the `add` command executes, `LogicManager` calls `Model#saveUndoState()`, saving the current address book state. `LogicManager` also stores the full command text (`"add n/Mochi t/Calico l/UTown"`) for use in the undo confirmation dialog.
+Step 2. The user executes `add n/Mochi t/Calico l/UTown` to add a new cat. Before the `add` command executes, `LogicManager` backs up the existing undo snapshot and calls `Model#saveUndoState()`, saving the current address book state. If the command succeeds, `LogicManager` also stores the full command text (`"add n/Mochi t/Calico l/UTown"`) for use in the undo confirmation dialog. If the command fails, `LogicManager` rolls back the undo snapshot to its previous state.
 
 Step 3. The user executes `update Mochi l/PGPR` to update the cat's location. Before the `update` command executes, `LogicManager` calls `Model#saveUndoState()` again, overwriting the previous snapshot with the current state (post-add). The stored command text is updated to `"update Mochi l/PGPR"`.
 
-<div markdown="span" class="alert alert-info">:information_source: **Note:** If a command fails its execution, the snapshot was already saved but the address book was not modified, so the snapshot simply reflects the unchanged state. Only one level of undo is supported — the most recent undoable command overwrites any previous snapshot.
+<div markdown="span" class="alert alert-info">:information_source: **Note:** If an undoable command fails (e.g., adding a duplicate cat), `LogicManager` rolls back the undo snapshot to its previous state using `Model#setUndoSnapshot()`. This ensures that a failed command does not corrupt the undo state of a previously successful command. Only one level of undo is supported — the most recent successful undoable command overwrites any previous snapshot.
 
 </div>
 
@@ -629,9 +631,13 @@ MVP - `* * * *`, High (must have) - `* * *`, Medium (nice to have) - `* *`, Low 
 
   * 1i1. CatPals shows an error message: "Location must be no longer than 50 chars!".
     Use case ends.
-* 1j. The user inputs duplicate locations.
+* 1j. The trait length exceeds 50 characters.
 
-  * 1j1. CatPals shows an error message: "You cannot add duplicate locations!".
+  * 1j1. CatPals shows an error message: "Trait must be no longer than 50 chars!".
+    Use case ends.
+* 1k. The health status length exceeds 50 characters.
+
+  * 1k1. CatPals shows an error message: "Health status must be no longer than 50 chars!".
     Use case ends.
 
 **Use case 2 (U2): Delete a cat**
@@ -736,30 +742,30 @@ MVP - `* * * *`, High (must have) - `* * *`, Medium (nice to have) - `* *`, Low 
   Use case ends.
 * 3a. The user requests to update by name.
 
-  * 3a1. The name is blank.
-    * 3a1a. CatPals shows an error message: "The info to be updated must not be blank!".
+  * 3a1. The name is blank or the command format is invalid.
+    * 3a1a. CatPals shows an error message with the correct command format.
       Use case ends.
-  * 3a2. The name contains symbols.
-    * 3a2a. CatPals shows an error message: "The name must not contain symbols!".
-      Use case ends.
-  * 3a3. The name does not match any cat in CatPals.
-    * 3a3a. CatPals shows an error message: "No cat with that name was found.".
+  * 3a2. The name does not match any cat in the displayed list.
+    * 3a2a. CatPals shows an error message: "No cat with that name was found.".
       Use case ends.
 * 3b. The user requests to update by index.
 
-  * 3b1. The index is blank.
-    * 3b1a. CatPals shows an error message: "The info to be updated must not be blank!".
+  * 3b1. The index is blank or the command format is invalid.
+    * 3b1a. CatPals shows an error message with the correct command format.
       Use case ends.
   * 3b2. The index is out of range (invalid index).
-    * 3b2a. CatPals shows an error message: "The cat index provided is invalid!".
+    * 3b2a. CatPals shows an error message: "The cat index provided is invalid".
       Use case resumes at step 2.
 * 3c. The updated status data is invalid.
 
   * 3c1. The user inputs more than 3 traits.
     * 3c1a. CatPals shows an error message: "You added more than 3 traits to the cat. Please only add up to 3 traits.".
       Use case ends.
-  * 3c2. The user inputs duplicate traits or locations.
-    * 3c2a. CatPals shows an error message: "You cannot add duplicate [traits/locations]!".
+  * 3c2. The user inputs duplicate traits.
+    * 3c2a. CatPals shows an error message: "You cannot add duplicate traits!".
+      Use case ends.
+  * 3c3. The updated cat name already exists (duplicates another cat).
+    * 3c3a. CatPals shows an error message: "This cat already exists in the cat notebook.".
       Use case ends.
 
 **Use case 6 (U6): Undo last action**

@@ -46,6 +46,12 @@ destroy AddCommandParser
 AddressBookParser --> LogicManager : a
 deactivate AddressBookParser
 
+LogicManager -> Model : saveUndoState()
+activate Model
+
+Model --> LogicManager
+deactivate Model
+
 LogicManager -> AddCommand : execute(m)
 activate AddCommand
 
