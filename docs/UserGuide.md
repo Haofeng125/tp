@@ -230,9 +230,9 @@ A cat can have up to 3 traits. Duplicate traits are not allowed. Health status i
 To attach a photo after adding, use the `attach` command.
 </div>
 
-<div markdown="span" class="alert alert-warning">:exclamation: **Caution: Input trimming and character limits**
-All input fields (name, trait, location, health status) are automatically trimmed before being stored — leading/trailing spaces are removed and consecutive spaces within a value are collapsed into a single space. Character limits are counted **after** this trimming (i.e., based on the cleaned-up value that is actually stored). This applies to all commands that accept these fields (e.g., `add`, `update`).<br>
-For example: <code>t/long&nbsp;&nbsp;&nbsp;&nbsp;tail</code> is stored as `t/long tail` (9 characters, not 13). So `t/long tail` and <code>t/long&nbsp;&nbsp;&nbsp;&nbsp;tail</code> are treated as the **same** trait. Similarly, `l/Utown Residence` and <code>l/Utown&nbsp;&nbsp;&nbsp;&nbsp;Residence</code> refer to the **same** location. However, `l/Utown Residence` and `l/U town Residence` are **different** because the words themselves differ.
+<div class="alert alert-warning" markdown="span">:exclamation: <strong>Caution: Input trimming and character limits</strong><br>
+All input fields (name, trait, location, health status) are automatically trimmed before being stored — leading/trailing spaces are removed and consecutive spaces within a value are collapsed into a single space. Character limits are counted <strong>after</strong> this trimming (i.e., based on the cleaned-up value that is actually stored). This applies to all commands that accept these fields (e.g., <code>add</code>, <code>update</code>).<br>
+For example: <code>t/long&nbsp;&nbsp;&nbsp;&nbsp;tail</code> is stored as <code>t/long tail</code> (9 characters, not 13). So <code>t/long tail</code> and <code>t/long&nbsp;&nbsp;&nbsp;&nbsp;tail</code> are treated as the <strong>same</strong> trait. Similarly, <code>l/Utown Residence</code> and <code>l/Utown&nbsp;&nbsp;&nbsp;&nbsp;Residence</code> refer to the <strong>same</strong> location. However, <code>l/Utown Residence</code> and <code>l/U town Residence</code> are <strong>different</strong> because the words themselves differ.
 </div>
 
 * `n/NAME`, `t/TRAIT`, and `l/LOCATION` are required.
@@ -389,10 +389,10 @@ Updates an existing cat in the app.
 If a name contains a word starting with `n/`, `t/`, `l/`, or `h/`, the command will be parsed incorrectly as these are reserved command prefixes. For example, a name like `Tommy t/he Cat` would cause `t/he Cat` to be misinterpreted as a trait. If a cat's name contains such a sequence, please omit the `/`.
 </div>
 
-<div markdown="span" class="alert alert-warning">:exclamation: **Caution: Input trimming and character limits**
-All input fields (name, trait, location, health status) are automatically trimmed before being stored — leading/trailing spaces are removed and consecutive spaces within a value are collapsed into a single space. Character limits are counted **after** this trimming (i.e., based on the cleaned-up value that is actually stored). This applies to all commands that accept these fields (e.g., `add`, `update`).<br>
-For example: <code>t/long&nbsp;&nbsp;&nbsp;&nbsp;tail</code> is stored as `t/long tail` (9 characters, not 13). So `t/long tail` and <code>t/long&nbsp;&nbsp;&nbsp;&nbsp;tail</code> are treated as the **same** trait. Similarly, `l/Utown Residence` and <code>l/Utown&nbsp;&nbsp;&nbsp;&nbsp;Residence</code> refer to the **same** location. However, `l/Utown Residence` and `l/U town Residence` are **different** because the words themselves differ.<br>
-Character limits — Name: **30**, Trait: **50**, Location: **50**, Health Status: **50**.
+<div class="alert alert-warning" markdown="span">:exclamation: <strong>Caution: Input trimming and character limits</strong><br>
+All input fields (name, trait, location, health status) are automatically trimmed before being stored — leading/trailing spaces are removed and consecutive spaces within a value are collapsed into a single space. Character limits are counted <strong>after</strong> this trimming (i.e., based on the cleaned-up value that is actually stored). This applies to all commands that accept these fields (e.g., <code>add</code>, <code>update</code>).<br>
+For example: <code>t/long&nbsp;&nbsp;&nbsp;&nbsp;tail</code> is stored as <code>t/long tail</code> (9 characters, not 13). So <code>t/long tail</code> and <code>t/long&nbsp;&nbsp;&nbsp;&nbsp;tail</code> are treated as the <strong>same</strong> trait. Similarly, <code>l/Utown Residence</code> and <code>l/Utown&nbsp;&nbsp;&nbsp;&nbsp;Residence</code> refer to the <strong>same</strong> location. However, <code>l/Utown Residence</code> and <code>l/U town Residence</code> are <strong>different</strong> because the words themselves differ.<br>
+Character limits — Name: <strong>30</strong>, Trait: <strong>50</strong>, Location: <strong>50</strong>, Health Status: <strong>50</strong>.
 </div>
 
 **Examples:**
