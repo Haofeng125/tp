@@ -88,10 +88,7 @@ public class LogicManager implements Logic {
 
     @Override
     public CommandResult executeCommand(Command command) throws CommandException {
-        if (isUndoableCommand(command)) {
-            model.saveUndoState();
-            lastUndoableCommandText = lastParsedCommandText;
-        } else if (command instanceof ClearCommand) {
+        if (command instanceof ClearCommand) {
             // Only clear clears the undo state, because it is a destructive
             // operation that cannot be meaningfully reversed.
             model.clearUndoState();
@@ -101,7 +98,31 @@ public class LogicManager implements Logic {
         // leave the undo state untouched so that a previous undoable command
         // can still be reversed.
 
-        CommandResult commandResult = command.execute(model);
+        // Save undo state before execution. If the command fails,
+        // roll back so that a failed command does not corrupt the undo state.
+        boolean undoable = isUndoableCommand(command);
+        ReadOnlyAddressBook oldUndoSnapshot = model.getUndoSnapshot();
+        boolean hadUndoState = model.canUndo();
+        String prevUndoableCommandText = lastUndoableCommandText;
+
+        if (undoable) {
+            model.saveUndoState();
+        }
+
+        CommandResult commandResult;
+        try {
+            commandResult = command.execute(model);
+        } catch (CommandException e) {
+            if (undoable) {
+                model.setUndoSnapshot(oldUndoSnapshot, hadUndoState);
+                lastUndoableCommandText = prevUndoableCommandText;
+            }
+            throw e;
+        }
+
+        if (undoable) {
+            lastUndoableCommandText = lastParsedCommandText;
+        }
 
         try {
             storage.saveAddressBook(model.getAddressBook());

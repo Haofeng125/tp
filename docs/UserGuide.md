@@ -226,14 +226,24 @@ Adds a cat profile to the cat notebook.
 Format: `add n/NAME t/TRAIT [t/MORE_TRAITS]… l/LOCATION [h/HEALTH_STATUS]`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-A cat can have up to 3 traits. Duplicate traits (traits with the exact same spelling, regardless of spacing) are not allowed. Health status is optional and defaults to `Unknown` if not provided.
+A cat can have up to 3 traits. Duplicate traits are not allowed. Health status is optional and defaults to `Unknown` if not provided.
 To attach a photo after adding, use the `attach` command.
 </div>
 
+<div markdown="span" class="alert alert-warning">:exclamation: **Caution: Input trimming and character limits**
+All input fields (name, trait, location, health status) are automatically trimmed before being stored — leading/trailing spaces are removed and consecutive spaces within a value are collapsed into a single space. Character limits are counted **after** this trimming (i.e., based on the cleaned-up value that is actually stored). This applies to all commands that accept these fields (e.g., `add`, `update`).<br>
+For example: `t/long    tail` is stored as `t/long tail` (9 characters, not 13). So `t/long tail` and `t/long    tail` are treated as the **same** trait. Similarly, `l/Utown Residence` and `l/Utown    Residence` refer to the **same** location. However, `l/Utown Residence` and `l/U town Residence` are **different** because the words themselves differ.
+</div>
+
 * `n/NAME`, `t/TRAIT`, and `l/LOCATION` are required.
-* `NAME` must contain at least one letter. It can be a mix of letters and numbers (e.g. `R2D2`), but it **cannot be only numbers** (e.g. `123`), because number-only names are ambiguous with index-based commands like `update` and `delete`.
-* `h/HEALTH_STATUS` is optional. Common values include `Vaccinated`, `Neutered`, `Vaccinated and Neutered`, `Injured`, or `Healthy`.
-* You can specify up to 3 `t/TRAIT` prefixes, but duplicate traits (same exact spelling) are not allowed.
+* `NAME` must contain at least one letter. It can be a mix of letters and numbers (e.g. `R2D2`), but it **cannot be only numbers** (e.g. `123`), because number-only names are ambiguous with index-based commands like `update` and `delete`. Names can only contain **letters, numbers, and spaces** — symbols such as apostrophes (`'`), hyphens (`-`), and slashes (`/`) are not allowed. If a cat's name contains these characters, please omit them (e.g., use `OMalley` instead of `O'Malley`, `Xiao Bai` instead of `Xiao-Bai`, `SO Sujith` instead of `S/O Sujith`). Maximum **30** characters (counted after trimming).
+
+<div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
+Additionally, if a name contains a word starting with `n/`, `t/`, `l/`, or `h/`, the command will be parsed incorrectly as these are reserved command prefixes. For example, `add n/Kitty t/friendly l/Home` would work, but `add n/Kitty t/friendly t/lover l/Home` is fine too — however, a name like `Tommy t/he Cat` would cause `t/he Cat` to be misinterpreted as a trait. If a cat's name contains such a sequence, please omit the `/`.
+</div>
+* `t/TRAIT` — you can specify up to 3 traits, but duplicate traits are not allowed. Maximum **50** characters per trait (counted after trimming).
+* `l/LOCATION` — maximum **50** characters (counted after trimming).
+* `h/HEALTH_STATUS` is optional. Common values include `Vaccinated`, `Neutered`, `Vaccinated and Neutered`, `Injured`, or `Healthy`. Defaults to `Unknown` if the `h/` prefix is omitted entirely. If `h/` is provided with an empty value (e.g., `h/`), the health status will be stored as blank. Maximum **50** characters (counted after trimming).
 
 Examples:
 
@@ -370,6 +380,20 @@ Updates an existing cat in the app.
 * Updating a trait will replace all currently existing traits, so if you just want to add a new one, make sure your command include the old traits.
 * Existing values will be updated to the input values; fields not specified are kept unchanged.
 * To change a cat's photo, use the `attach` command instead.
+* `NAME` must contain at least one letter. It can be a mix of letters and numbers (e.g. `R2D2`), but it **cannot be only numbers** (e.g. `123`). Names can only contain **letters, numbers, and spaces** — symbols such as apostrophes (`'`), hyphens (`-`), and slashes (`/`) are not allowed. If a cat's name contains these characters, please omit them (e.g., use `OMalley` instead of `O'Malley`, `Xiao Bai` instead of `Xiao-Bai`, `SO Sujith` instead of `S/O Sujith`). Maximum **30** characters (counted after trimming).
+* `t/TRAIT` — you can specify up to 3 traits, but duplicate traits are not allowed. Maximum **50** characters per trait (counted after trimming).
+* `l/LOCATION` — maximum **50** characters (counted after trimming).
+* `h/HEALTH_STATUS` — common values include `Vaccinated`, `Neutered`, `Vaccinated and Neutered`, `Injured`, or `Healthy`. Providing `h/` with an empty value (e.g., `update 1 h/`) will reset the health status to `Unknown`. Maximum **50** characters (counted after trimming).
+
+<div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
+If a name contains a word starting with `n/`, `t/`, `l/`, or `h/`, the command will be parsed incorrectly as these are reserved command prefixes. For example, a name like `Tommy t/he Cat` would cause `t/he Cat` to be misinterpreted as a trait. If a cat's name contains such a sequence, please omit the `/`.
+</div>
+
+<div markdown="span" class="alert alert-warning">:exclamation: **Caution: Input trimming and character limits**
+All input fields (name, trait, location, health status) are automatically trimmed before being stored — leading/trailing spaces are removed and consecutive spaces within a value are collapsed into a single space. Character limits are counted **after** this trimming (i.e., based on the cleaned-up value that is actually stored). This applies to all commands that accept these fields (e.g., `add`, `update`).<br>
+For example: `t/long    tail` is stored as `t/long tail` (9 characters, not 13). So `t/long tail` and `t/long    tail` are treated as the **same** trait. Similarly, `l/Utown Residence` and `l/Utown    Residence` refer to the **same** location. However, `l/Utown Residence` and `l/U town Residence` are **different** because the words themselves differ.<br>
+Character limits — Name: **30**, Trait: **50**, Location: **50**, Health Status: **50**.
+</div>
 
 **Examples:**
 
@@ -511,25 +535,29 @@ Because this action permanently removes all your cat data, CatPals will show a c
 
 ### Undo the previous action : `undo`
 
-Reverses one data-changing step: the last command that actually modified the notebook.
+Reverses the most recent data-changing command, restoring the notebook to its previous state.
 
 Format: `undo`
 
+<div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
+The `undo` command ignores any extra input after the keyword. For example, `undo 2` behaves exactly the same as `undo` — it only reverses **one** most recent data-changing command. Multi-step undo is not supported.
+</div>
+
 | Recent command | What `undo` does |
 | -------------- | ---------------- |
-| [`add`](#adding-a-cat-add) | Removes that cat |
-| [`delete`](#deleting-a-cat--delete) | Puts that cat back |
-| [`update`](#updating-a-cat-profile--update) | Restores previous fields |
-| [`attach`](#attaching-a-cat-photo-attach) | Removes the last attached photo (and its copied file where applicable) |
-| [`help`](#viewing-help--help), [`list`](#listing-all-cats-list), [`find`](#locating-cats-by-name-location-traits-or-health-status--find) | No change (read-only) |
-| [`export`](#exporting-the-cat-list--export), [`clear`](#clearing-all-entries--clear) | No change — **not** undoable; cleared data cannot be recovered with `undo` |
+| [`add`](#adding-a-cat-add) | Removes the added cat entry |
+| [`delete`](#deleting-a-cat--delete) | Restores the deleted cat entry |
+| [`update`](#updating-a-cat-profile--update) | Restores the previously saved fields |
+| [`attach`](#attaching-a-cat-photo-attach) | Removes the photo path reference from the cat entry. The original image file on disk is not affected. |
+| [`help`](#viewing-help--help), [`list`](#listing-all-cats-list), [`find`](#locating-cats-by-name-location-traits-or-health-status--find) | No change — these are read-only commands |
+| [`export`](#exporting-the-cat-list--export), [`clear`](#clearing-all-entries--clear) | No change — these commands are **not** undoable; cleared data cannot be recovered with `undo` |
 | [`undo`](#undo-the-previous-action--undo) again | No effect |
 
 **Rules:**
-* `undo` reverses the most recent data-changing command (see the table above for which commands are undoable). Read-only commands like `list` and `find` do not affect the undo state, so you can still undo even after running them.
-* Only **one** level of undo is supported — once you undo, the saved state is consumed and you cannot undo again until another undoable command is run.
+* `undo` reverses the most recent data-changing command (see the table above for which commands are undoable). Read-only commands such as `list` and `find` do not affect the undo state, so you can still undo even after running them.
+* Only **one** level of undo is supported. Once you undo, the saved state is consumed and you cannot undo again until another undoable command is executed.
 * Running `clear` also clears the undo state, so a previous action cannot be recovered after a `clear`.
-* Exported files stay on disk even if you `undo` another command afterward.
+* Exported files remain on disk even if you `undo` another command afterward.
 * A confirmation dialog will appear before the undo is applied, showing the exact command that will be undone. Press **Enter** to confirm or **Esc** to cancel.
 
 **Example:**

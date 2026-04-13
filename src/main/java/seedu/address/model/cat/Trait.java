@@ -13,6 +13,8 @@ public class Trait {
     public static final String MESSAGE_DUPLICATE = "You cannot add duplicate traits!";
     public static final String MESSAGE_TOO_MANY = "You added more than 3 traits to the cat. "
             + "Please only add up to 3 traits.";
+    public static final String MESSAGE_TOO_LONG = "Trait must be no longer than 50 chars!";
+    public static final int MAX_LENGTH = 50;
 
     /*
      * The first character must not be whitespace,

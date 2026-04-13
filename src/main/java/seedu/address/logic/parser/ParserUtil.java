@@ -44,7 +44,7 @@ public class ParserUtil {
      */
     public static Name parseName(String name) throws ParseException {
         requireNonNull(name);
-        String trimmedName = name.trim();
+        String trimmedName = name.trim().replaceAll("\\s+", " ");
         if (trimmedName.isEmpty()) {
             throw new ParseException(Name.MESSAGE_BLANK);
         }
@@ -68,9 +68,12 @@ public class ParserUtil {
      */
     public static Trait parseTrait(String trait) throws ParseException {
         requireNonNull(trait);
-        String trimmedTrait = trait.trim();
+        String trimmedTrait = trait.trim().replaceAll("\\s+", " ");
         if (!Trait.isValidTrait(trimmedTrait)) {
             throw new ParseException(Trait.MESSAGE_CONSTRAINTS);
+        }
+        if (trimmedTrait.length() > Trait.MAX_LENGTH) {
+            throw new ParseException(Trait.MESSAGE_TOO_LONG);
         }
         return new Trait(trimmedTrait);
     }
@@ -106,7 +109,7 @@ public class ParserUtil {
      */
     public static Location parseLocation(String location) throws ParseException {
         requireNonNull(location);
-        String trimmedLocation = location.trim();
+        String trimmedLocation = location.trim().replaceAll("\\s+", " ");
         if (trimmedLocation.isEmpty()) {
             throw new ParseException(Location.MESSAGE_BLANK);
         }
@@ -132,11 +135,14 @@ public class ParserUtil {
      * If empty, returns the default health status.
      * Unlike other parse methods, this does not perform validation on the input value.
      */
-    public static Health parseHealth(String health) {
+    public static Health parseHealth(String health) throws ParseException {
         requireNonNull(health);
-        String trimmedHealth = health.trim();
+        String trimmedHealth = health.trim().replaceAll("\\s+", " ");
         if (trimmedHealth.isEmpty()) {
             return new Health(Health.DEFAULT_VALUE);
+        }
+        if (trimmedHealth.length() > Health.MAX_LENGTH) {
+            throw new ParseException(Health.MESSAGE_TOO_LONG);
         }
         return new Health(trimmedHealth);
     }

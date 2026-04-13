@@ -9,6 +9,8 @@ import static java.util.Objects.requireNonNull;
 public class Health {
 
     public static final String DEFAULT_VALUE = "Unknown";
+    public static final String MESSAGE_TOO_LONG = "Health status must be no longer than 50 chars!";
+    public static final int MAX_LENGTH = 50;
 
     public final String value;
 

@@ -159,6 +159,17 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public ReadOnlyAddressBook getUndoSnapshot() {
+        return previousAddressBook;
+    }
+
+    @Override
+    public void setUndoSnapshot(ReadOnlyAddressBook snapshot, boolean hasState) {
+        this.previousAddressBook = snapshot;
+        this.hasUndoableState = hasState;
+    }
+
+    @Override
     public void undoLastChange() {
         assert hasUndoableState && previousAddressBook != null;
         setAddressBook(previousAddressBook);

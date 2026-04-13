@@ -114,4 +114,14 @@ public interface Model {
      * then clears the saved state so that consecutive undos have no effect.
      */
     void undoLastChange();
+
+    /**
+     * Returns the current undo snapshot, or {@code null} if none exists.
+     */
+    ReadOnlyAddressBook getUndoSnapshot();
+
+    /**
+     * Restores the undo snapshot to the given state.
+     */
+    void setUndoSnapshot(ReadOnlyAddressBook snapshot, boolean hasState);
 }

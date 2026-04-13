@@ -192,6 +192,16 @@ public class AddCommandTest {
         public void undoLastChange() {
             throw new AssertionError("This method should not be called.");
         }
+
+        @Override
+        public ReadOnlyAddressBook getUndoSnapshot() {
+            return null;
+        }
+
+        @Override
+        public void setUndoSnapshot(ReadOnlyAddressBook snapshot, boolean hasState) {
+            // undo state is not relevant for most command unit tests
+        }
     }
 
     /**
