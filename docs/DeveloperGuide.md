@@ -667,7 +667,7 @@ MVP - `* * * *`, High (must have) - `* * *`, Medium (nice to have) - `* *`, Low 
     * 3b1a. CatPals shows an error message: "The info to be deleted must not be blank!".
       Use case ends.
   * 3b2. The number is out of range (invalid index).
-    * 3b2a. CatPals shows an error message: "The input number is out of range. Please try again.".
+    * 3b2a. CatPals shows an error message: "No cat with the name 'CatName' found in the displayed list.".
       Use case resumes at step 2.
 
 **Use case 3 (U3): Search for a cat using its name**
@@ -743,7 +743,7 @@ MVP - `* * * *`, High (must have) - `* * *`, Medium (nice to have) - `* *`, Low 
     * 3a2a. CatPals shows an error message: "The name must not contain symbols!".
       Use case ends.
   * 3a3. The name does not match any cat in CatPals.
-    * 3a3a. CatPals shows an error message: "No cat with that name was found.".
+    * 3a3a. CatPals shows an error message: "No cat with the name 'CatName' found in the displayed list.".
       Use case ends.
 * 3b. The user requests to update by index.
 

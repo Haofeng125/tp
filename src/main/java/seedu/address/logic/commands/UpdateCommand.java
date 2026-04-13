@@ -49,7 +49,7 @@ public class UpdateCommand extends Command {
     public static final String MESSAGE_EDIT_CAT_SUCCESS = "Updated Cat: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to update must be provided.";
     public static final String MESSAGE_DUPLICATE_CAT = "This cat already exists in the cat notebook.";
-    public static final String MESSAGE_INVALID_CAT_NAME = "No cat with that name was found.";
+    public static final String MESSAGE_INVALID_CAT_NAME = "No cat with the name '%1$s' found in the displayed list.";
 
     private final Index index;
     private final Name targetName;
@@ -103,7 +103,8 @@ public class UpdateCommand extends Command {
             catToEdit = lastShownList.stream()
                     .filter(cat -> cat.getName().fullName.equalsIgnoreCase(targetName.fullName))
                     .findFirst()
-                    .orElseThrow(() -> new CommandException(MESSAGE_INVALID_CAT_NAME));
+                    .orElseThrow(() -> new CommandException(
+                            String.format(MESSAGE_INVALID_CAT_NAME, targetName.fullName)));
         }
         Cat editedCat = createEditedCat(catToEdit, editCatDescriptor);
 
@@ -149,14 +150,16 @@ public class UpdateCommand extends Command {
             catToEdit = lastShownList.stream()
                     .filter(cat -> cat.getName().fullName.equalsIgnoreCase(targetName.fullName))
                     .findFirst()
-                    .orElseThrow(() -> new CommandException(MESSAGE_INVALID_CAT_NAME));
+                    .orElseThrow(() -> new CommandException(
+                            String.format(MESSAGE_INVALID_CAT_NAME, targetName.fullName)));
         }
         Cat editedCat = createEditedCat(catToEdit, editCatDescriptor);
 
         if (!catToEdit.isSameCat(editedCat) && model.hasCat(editedCat)) {
             throw new CommandException(MESSAGE_DUPLICATE_CAT);
         }
-        assert catToEdit.isSameCat(editedCat) || !model.hasCat(editedCat) : "Preview would introduce a duplicate cat";
+        assert catToEdit.isSameCat(editedCat) || !model.hasCat(editedCat)
+                : "Preview would introduce a duplicate cat";
 
         return editedCat;
     }
