@@ -427,7 +427,8 @@ Format: `find n/CAT_NAME`, `find l/LOCATION`, `find t/TRAIT`, or `find h/HEALTH_
 * The `find` command is case-insensitive (e.g. `find`, `Find`, and `FIND` are all acceptable).
 * The search is case-insensitive. For example, `snowy` **will** match `Snowy`.
 * The identifier flags (`n/`, `l/`, `t/`, `h/`) are all case-insensitive. For example, `find N/Snowy` and `find n/Snowy` are both valid.
-* The keyword can match any part of the name. For example, `find n/now` will match `Snowy`, `find l/COM` will match `COM4`, `COM3`, `COM2` and `COM1`, `find t/strip` will match `Striped`.
+* The keyword can match any part of the name (**Except for health status.** See point below). For example, `find n/now` will match `Snowy`, `find l/COM` will match `COM4`, `COM3`, `COM2` and `COM1`, `find t/strip` will match `Striped`.
+* There is **no** partial matching for health status. For example, `find h/healthy` will **only** match cats with health status `healthy`.
 * The order of the keywords does not matter. For example, both `find t/friendly l/COM3` and `find l/COM3 t/friendly` are accepted.
 * Cats matching all keywords will be returned.
   * e.g. `find l/COM3 t/friendly` will return all cats that are at `COM3` **and** have the trait `friendly`.
