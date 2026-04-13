@@ -225,9 +225,9 @@ Adds a cat profile to the cat notebook.
 
 Format: `add n/NAME t/TRAIT [t/MORE_TRAITS]… l/LOCATION [h/HEALTH_STATUS]`
 
-<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-A cat can have up to 3 traits. Duplicate traits are not allowed. Health status is optional and defaults to `Unknown` if not provided.
-To attach a photo after adding, use the `attach` command.
+<div markdown="span" class="alert alert-primary">:bulb: <strong>Tip:</strong>
+A cat can have up to 3 traits. Duplicate traits are not allowed. Health status is optional and defaults to <code>Unknown</code> if not provided.
+To attach a photo after adding, use the <code>attach</code> command.
 </div>
 
 <div class="alert alert-warning" markdown="span">:exclamation: <strong>Caution: Input trimming and character limits</strong><br>
@@ -238,8 +238,8 @@ For example: <code>t/long&nbsp;&nbsp;&nbsp;&nbsp;tail</code> is stored as <code>
 * `n/NAME`, `t/TRAIT`, and `l/LOCATION` are required.
 * `NAME` must contain at least one letter. It can be a mix of letters and numbers (e.g. `R2D2`), but it **cannot be only numbers** (e.g. `123`), because number-only names are ambiguous with index-based commands like `update` and `delete`. Names can only contain **letters, numbers, and spaces** — symbols such as apostrophes (`'`), hyphens (`-`), and slashes (`/`) are not allowed. If a cat's name contains these characters, please omit them (e.g., use `OMalley` instead of `O'Malley`, `Xiao Bai` instead of `Xiao-Bai`, `SO Sujith` instead of `S/O Sujith`). Maximum **30** characters (counted after trimming).
 
-<div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
-Additionally, if a name contains a word starting with `n/`, `t/`, `l/`, or `h/`, the command will be parsed incorrectly as these are reserved command prefixes. For example, `add n/Kitty t/friendly l/Home` would work, but `add n/Kitty t/friendly t/lover l/Home` is fine too — however, a name like `Tommy t/he Cat` would cause `t/he Cat` to be misinterpreted as a trait. If a cat's name contains such a sequence, please omit the `/`.
+<div markdown="span" class="alert alert-warning">:exclamation: <strong>Caution:</strong>
+Additionally, if a name contains a word starting with <code>n/</code>, <code>t/</code>, <code>l/</code>, or <code>h/</code>, the command will be parsed incorrectly as these are reserved command prefixes. For example, <code>add n/Kitty t/friendly l/Home</code> would work, but <code>add n/Kitty t/friendly t/lover l/Home</code> is fine too — however, a name like <code>Tommy t/he Cat</code> would cause <code>t/he Cat</code> to be misinterpreted as a trait. If a cat's name contains such a sequence, please omit the <code>/</code>.
 </div>
 * `t/TRAIT` — you can specify up to 3 traits, but duplicate traits are not allowed. Maximum **50** characters per trait (counted after trimming).
 * `l/LOCATION` — maximum **50** characters (counted after trimming).
@@ -323,8 +323,8 @@ attach Snowy White images/snowy.png
 
 The path you type is stored exactly as-is. CatPals does not modify or normalise it. Whether the file is found on each launch depends on your operating system's case sensitivity — on Linux/macOS, `images/Bowie.png` and `images/bowie.png` are different files; on Windows they are treated as the same.
 
-<div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
-CatPals must be launched from the command window inside your `CatPals` folder (i.e. using `java -jar catpals.jar`) for relative image paths to work correctly. Double-clicking the `.jar` file may cause images not to load.
+<div markdown="span" class="alert alert-warning">:exclamation: <strong>Caution:</strong>
+CatPals must be launched from the command window inside your <code>CatPals</code> folder (i.e. using <code>java -jar catpals.jar</code>) for relative image paths to work correctly. Double-clicking the <code>.jar</code> file may cause images not to load.
 </div>
 
 If the image file cannot be found at the given path, or the image file does not have the correct format, the attach command will fail fast with an error message.
@@ -385,8 +385,8 @@ Updates an existing cat in the app.
 * `l/LOCATION` — maximum **50** characters (counted after trimming).
 * `h/HEALTH_STATUS` — common values include `Vaccinated`, `Neutered`, `Vaccinated and Neutered`, `Injured`, or `Healthy`. Providing `h/` with an empty value (e.g., `update 1 h/`) will reset the health status to `Unknown`. Maximum **50** characters (counted after trimming).
 
-<div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
-If a name contains a word starting with `n/`, `t/`, `l/`, or `h/`, the command will be parsed incorrectly as these are reserved command prefixes. For example, a name like `Tommy t/he Cat` would cause `t/he Cat` to be misinterpreted as a trait. If a cat's name contains such a sequence, please omit the `/`.
+<div markdown="span" class="alert alert-warning">:exclamation: <strong>Caution:</strong>
+If a name contains a word starting with <code>n/</code>, <code>t/</code>, <code>l/</code>, or <code>h/</code>, the command will be parsed incorrectly as these are reserved command prefixes. For example, a name like <code>Tommy t/he Cat</code> would cause <code>t/he Cat</code> to be misinterpreted as a trait. If a cat's name contains such a sequence, please omit the <code>/</code>.
 </div>
 
 <div class="alert alert-warning" markdown="span">:exclamation: <strong>Caution: Input trimming and character limits</strong><br>
@@ -540,8 +540,8 @@ Reverses the most recent data-changing command, restoring the notebook to its pr
 
 Format: `undo`
 
-<div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
-The `undo` command ignores any extra input after the keyword. For example, `undo 2` behaves exactly the same as `undo` — it only reverses **one** most recent data-changing command. Multi-step undo is not supported.
+<div markdown="span" class="alert alert-warning">:exclamation: <strong>Caution:</strong>
+The <code>undo</code> command ignores any extra input after the keyword. For example, <code>undo 2</code> behaves exactly the same as <code>undo</code> — it only reverses <strong>one</strong> most recent data-changing command. Multi-step undo is not supported.
 </div>
 
 | Recent command | What `undo` does |
@@ -583,8 +583,8 @@ CatPals saves your data to disk **automatically** after any command that changes
 
 Data is stored as JSON at **`[folder containing catpals.jar]/data/addressbook.json`**. Advanced users may edit this file directly; everyone else can ignore it.
 
-<div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
-Invalid JSON or unsupported values can make CatPals **drop all data** and start empty on the next launch. **Back up** `addressbook.json` before editing. Only edit the file if you know the expected format.
+<div markdown="span" class="alert alert-warning">:exclamation: <strong>Caution:</strong>
+Invalid JSON or unsupported values can make CatPals <strong>drop all data</strong> and start empty on the next launch. <strong>Back up</strong> <code>addressbook.json</code> before editing. Only edit the file if you know the expected format.
 </div>
 
 ### Archiving data files `[coming in v2.0]`
