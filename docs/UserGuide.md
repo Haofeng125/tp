@@ -186,7 +186,7 @@ Use **↑** and **↓** to move the selection (works even when the cursor is in 
 
 ### Confirmation dialogs
 
-For **`update`**, **`delete`**, **`clear`**, and **`undo`**, a dialog will ask you to confirm. Press **Enter** to confirm or **Esc** to cancel. No mouse required. See [Update](#updating-a-cat-profile--update) and [Delete](#deleting-a-cat--delete) for examples.
+For **`update`**, **`delete`**, **`clear`**, **`undo`**, and **`export`** (when overwriting an existing file), a dialog will ask you to confirm. Press **Enter** to confirm or **Esc** to cancel. No mouse required. See [Update](#updating-a-cat-profile--update) and [Delete](#deleting-a-cat--delete) for examples.
 
 ---
 
@@ -243,6 +243,7 @@ Like many CLI applications, if multiple fields are invalid at the same time, Cat
 </div>
 
 * `n/NAME`, `t/TRAIT`, and `l/LOCATION` are required.
+* Duplicate names are checked **case-insensitively** — for example, you cannot add `Bowie` if `bowie` already exists.
 * `NAME` must contain at least one letter. It can be a mix of letters and numbers (e.g. `R2D2`), but it **cannot be only numbers** (e.g. `123`), because number-only names are ambiguous with index-based commands like `update` and `delete`. Names can only contain **letters, numbers, and spaces** — symbols such as apostrophes (`'`), hyphens (`-`), and slashes (`/`) are not allowed. If a cat's name contains these characters, please omit them (e.g., use `OMalley` instead of `O'Malley`, `Xiao Bai` instead of `Xiao-Bai`, `SO Sujith` instead of `S/O Sujith`). Maximum **30** characters (counted after trimming).
 
 <div markdown="block" class="alert alert-warning">
@@ -387,7 +388,7 @@ Updates an existing cat in the app.
 | Health Status | h/     | Updates the cat's health status                                                      |
 
 
-* Updates the cat at the specified `INDEX` or `CURRENT_NAME`. The index refers to the index number shown in the displayed cat list. The index **must be a positive integer** 1, 2, 3, …
+* Updates the cat at the specified `INDEX` or `CURRENT_NAME` (case-insensitive). The index refers to the index number shown in the displayed cat list. The index **must be a positive integer** 1, 2, 3, …
 * At least one field must be provided.
 * Updating a trait will replace all currently existing traits, so if you just want to add a new one, make sure your command include the old traits.
 * Existing values will be updated to the input values; fields not specified are kept unchanged.
@@ -485,7 +486,7 @@ Deletes the specified cat from the current list that is in display (Either a ful
 
 Format: `delete INDEX` or `delete NAME`
 
-* Deletes the cat at the specified `INDEX` or with the specific name `NAME`.
+* Deletes the cat at the specified `INDEX` or with the specific name `NAME` (case-insensitive).
 * The index refers to the index number shown in the displayed cat list.
 * The index **must be a positive integer** 1, 2, 3, …
 

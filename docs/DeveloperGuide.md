@@ -271,7 +271,7 @@ The `delete` command works as follows:
 ![DeleteSequenceDiagram](images/DeleteSequenceDiagram.png)
 
 1. `LogicManager` receives the command string and delegates parsing to `AddressBookParser`.
-2. `AddressBookParser` identifies the `delete` keyword and creates a `DeleteCommandParser`, which attempts to parse the argument as an index first. If that fails, it treats the argument as a cat name (case-sensitive).
+2. `AddressBookParser` identifies the `delete` keyword and creates a `DeleteCommandParser`, which attempts to parse the argument as an index first. If that fails, it treats the argument as a cat name (case-insensitive).
 3. `LogicManager` calls `DeleteCommand#execute(model)`.
 4. `DeleteCommand` retrieves the current filtered cat list via `Model#getFilteredCatList()`.
 5. The target cat is resolved:
@@ -286,8 +286,8 @@ The `update` command allows users to change an existing cat’s name, traits, lo
 
 **Format:** `update CAT_NAME [n/NAME] [t/TRAIT]... [l/LOCATION] [h/HEALTH_STATUS]` **or** `update INDEX [n/NAME] [t/TRAIT]... [l/LOCATION] [h/HEALTH_STATUS]`
 
-* At least one of `n/`, `t/`, `l/`, or `h/` must be present; otherwise a `ParseException` is thrown with `UpdateCommand.MESSAGE_NOT_EDITED`.
-* `n/`, `t/`, `l/`, and `h/` are **case-insensitive** for the `update` command only (e.g. `N/` and `n/` are treated the same). This is done in `UpdateCommandParser#normalizeUpdatePrefixes` before tokenization.
+* At least one of `n/`, `t/`, `l/`, or `h/` must be present; otherwise a `ParseException` is thrown with `MESSAGE_INVALID_COMMAND_FORMAT` (showing `UpdateCommand.MESSAGE_USAGE`). If prefixes are present but all values are empty after parsing, a `ParseException` is thrown with `UpdateCommand.MESSAGE_NOT_EDITED`.
+* `n/`, `t/`, `l/`, and `h/` are **case-insensitive** for the `add` and `update` commands (e.g. `N/` and `n/` are treated the same). This is done in `UpdateCommandParser#normalizeUpdatePrefixes` before tokenization.
 * Duplicate `n/`, `l/`, or `h/` prefixes in one command are rejected via `ArgumentMultimap#verifyNoDuplicatePrefixesFor`.
 * Multiple `t/TRAIT` prefixes are allowed (subject to the usual cap of three traits and no duplicates within the parsed list).
 * Supplying `t/` **replaces** the cat’s entire trait list with the traits given in that command. To keep existing traits, the user must include them again alongside any new ones. A lone `t/` with no value clears all traits (parsed as an empty trait list).
@@ -341,7 +341,7 @@ The export feature allows users to export the currently displayed cat list to an
 
 **Format:** `export [TITLE]`
 * If `TITLE` is omitted, the file is saved as `export.html` with the heading "Cat List".
-* If `TITLE` is provided (e.g. `export Utown Cats`), spaces are replaced with hyphens for the filename (`utown-cats.html`), and the original text is used as the page heading (`Utown Cats`).
+* If `TITLE` is provided (e.g. `export Utown Cats`), spaces are replaced with hyphens for the filename (`Utown-Cats.html`), and the original text is used as the page heading (`Utown Cats`).
 * `TITLE` must not contain any of the characters `\ / : * ? " < > |`, otherwise a `ParseException` is thrown.
 
 The following sequence diagram shows how an export operation is carried out:
@@ -660,10 +660,14 @@ Priorities: MVP - `* * * *`, High (must have) - `* * *`, Medium (nice to have) -
 * 3b. The user requests to delete by number (index).
 
   * 3b1. The number is blank.
-    * 3b1a. CatPals shows an error message: "The info to be deleted must not be blank!".
+    * 3b1a. CatPals shows an error message: "Invalid command format!
+      delete: Deletes the cat identified by the index number or name (case-sensitive) in the displayed cat list.
+      Parameters: INDEX (must be a positive integer) or CAT_NAME
+      Example: delete 1
+      Example: delete Whiskers".
       Use case ends.
   * 3b2. The number is out of range (invalid index).
-    * 3b2a. CatPals shows an error message: "No cat with the name 'CatName' found in the displayed list.".
+    * 3b2a. CatPals shows an error message: "The cat index provided is invalid".
       Use case resumes at step 2.
 
 **Use case 3 (U3): Search for a cat using its name**
@@ -726,7 +730,7 @@ Priorities: MVP - `* * * *`, High (must have) - `* * *`, Medium (nice to have) -
     * 3a1a. CatPals shows an error message with the correct command format.
       Use case ends.
   * 3a2. The name does not match any cat in the displayed list.
-    * 3a2a. CatPals shows an error message: "No cat with that name was found.".
+    * 3a2a. CatPals shows an error message: "No cat with the name '<name>' found in the displayed list.".
       Use case ends.
 * 3b. The user requests to update by index.
 
@@ -828,22 +832,15 @@ Priorities: MVP - `* * * *`, High (must have) - `* * *`, Medium (nice to have) -
 
 **MSS**
 
-1. User requests to filter cats by specific traits
-2. CatPals prompts the user to input the traits to filter by
-3. User provides the traits
-4. CatPals validates the input and displays a list of cats that match the specified traits.
-5. User selects a cat profile from the filtered list to view its details
+1. User requests to filter cats by specific traits (e.g. `find t/Friendly`)
+2. CatPals displays a list of cats that match the specified traits
 
    Use case ends.
 
 **Extensions**
 
-* 4a. The user inputs invalid traits (e.g., more than 3 traits, duplicate traits).
-  * 4a1. CatPals shows an error message: "Invalid traits input. Please provide up to 3 unique traits.".
-  * 4a2. CatPals prompts the user to input the traits again.
-    Use case resumes at step 2.
-* 4b. No cats match the specified traits.
-  * 4b1. CatPals shows a message: "No cats found with the specified traits."
+* 2a. No cats match the specified traits.
+  * 2a1. CatPals shows an error message: "There is no such profile in my records! Is there a typo?".
     Use case ends.
 
 ## Non-Functional Requirements
