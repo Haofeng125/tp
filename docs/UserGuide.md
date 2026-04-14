@@ -206,6 +206,7 @@ For **`update`**, **`delete`**, **`clear`**, and **`undo`**, a dialog will ask y
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 * The `list` command does **not** accept extra parameters. Typing `list` followed by anything will show an error.
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
+* **The command box is cleared after every command, including invalid ones.** This is intentional, as it encourages users to type each command fresh and avoids confusion from partially-corrected input lingering on screen. If you make a mistake, simply retype the corrected command. For long or repetitive commands, consider drafting them in a text editor first and pasting when ready.
 
 </div>
 
