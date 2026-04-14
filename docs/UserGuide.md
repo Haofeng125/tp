@@ -466,10 +466,11 @@ Format: `find n/CAT_NAME`, `find l/LOCATION`, `find t/TRAIT`, or `find h/HEALTH_
 **More examples:** `find t/Friendly t/Playful` (either trait), `find n/Alex n/Li` (either keyword in the name field), `find l/COM3 t/Fluffy` (location **and** trait).
 
 <div markdown="block" class="alert alert-warning">
-:exclamation:
-**Caution**:
+
+:exclamation: **Caution:**
 Ensure there is an identifier flag before each keyword if multiple are used. For example, use t/friendly t/white,
 not t/friendly white.
+
 </div>
 
 <p align="center">
