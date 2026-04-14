@@ -202,10 +202,10 @@ For **`update`**, **`delete`**, **`clear`**, and **`undo`**, a dialog will ask y
   e.g. `n/NAME t/TRAIT [h/HEALTH_STATUS]` can be used as `n/Snowy t/white h/vaccinated` or as `n/Snowy t/white`.
 * Items with `…` after them can be used multiple times (>= 1).<br>
   e.g. `[t/TRAIT]…` can be used as `t/white`, `t/white t/small` etc.
-* Extraneous parameters for commands that do not take in parameters (such as `help`, `exit` and `clear`) will be ignored.<br>
+* Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
-* The `list` command does **not** accept extra parameters. Typing `list` followed by anything will show an error.
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
+* **The command box is cleared after every command, including invalid ones.** This is intentional, as it encourages users to type each command fresh and avoids confusion from partially-corrected input lingering on screen. If you make a mistake, simply retype the corrected command. For long or repetitive commands, consider drafting them in a text editor first and pasting when ready.
 
 </div>
 
@@ -371,8 +371,6 @@ Shows a list of all cats in the app.
 
 Format: `list`
 
-:no_entry_sign: `list` does not accept extra parameters. Typing `list foo` will show an error and suggest you use `list` instead.
-
 ### Updating a cat profile : `update`
 
 Updates an existing cat in the app.
@@ -492,7 +490,7 @@ Format: `delete INDEX` or `delete NAME`
 Examples:
 
 * `list` followed by `delete 2` deletes the 2nd cat in the current list.
-* `find Betsy` followed by `delete 1` deletes the 1st cat in the results of the `find` command.
+* `find n/Betsy` followed by `delete 1` deletes the 1st cat in the results of the `find` command.
 * `delete Brownie` deletes the cat with the specific name "Brownie".
 
 Before the cat is removed, CatPals will show a confirmation dialog. Press **Enter** to confirm or **Esc** to cancel.

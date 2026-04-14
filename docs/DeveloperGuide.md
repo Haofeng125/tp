@@ -25,8 +25,8 @@ title: Developer Guide
     * [Help feature](#help-feature)
     * [Exit feature](#exit-feature)
     * [Undo feature](#undo-feature)
-      * [Design considerations:](#design-considerations)
-    * [\[Proposed\] Data archiving](#proposed-data-archiving)
+      * [Undo state behaviour summary](#undo-state-behaviour-summary)
+      * [Design considerations](#design-considerations)
   * [**Documentation, logging, testing, configuration, dev-ops**](#documentation-logging-testing-configuration-dev-ops)
   * [**Appendix: Requirements**](#appendix-requirements)
     * [Product scope](#product-scope)
@@ -380,23 +380,13 @@ The `clear` command works as follows:
 
 ### List feature
 
-The `list` command shows all cats in the address book. It is implemented via `ListCommand`, which extends `Command`, and requires no dedicated parser class.
-
-Unlike most no-argument commands, `list` rejects extra parameters instead of silently ignoring them. The check is performed in `AddressBookParser`: if the `arguments` string (everything after the command word) is non-empty after trimming, a `ParseException` is thrown with `ListCommand.MESSAGE_EXTRA_ARGS`, which reads:
-
-```
-list does not take extra parameters.
-Did you just mean: list
-```
+The `list` command shows all cats in the address book. It is implemented via `ListCommand`, which extends `Command`, and requires no dedicated parser class. Like `help`, `exit`, and `clear`, extra parameters are silently ignored — `AddressBookParser` instantiates `ListCommand` directly regardless of any trailing arguments.
 
 **Implementation flow:**
 
-1. User types e.g. `list foo` and presses Enter.
-2. `AddressBookParser#parseCommand()` splits the input into `commandWord = "list"` and `arguments = " foo"`.
-3. `arguments.trim()` is non-empty, so a `ParseException` is thrown with `ListCommand.MESSAGE_EXTRA_ARGS`.
-4. The error message is displayed to the user; no state change occurs.
-
-If the user types exactly `list` (no arguments), `arguments` is an empty string, the check passes, and `ListCommand` is returned and executed normally.
+1. User types e.g. `list` (or `list foo`) and presses Enter.
+2. `AddressBookParser#parseCommand()` matches the command word `"list"` and returns a new `ListCommand`.
+3. `ListCommand#execute()` calls `Model#updateFilteredCatList(PREDICATE_SHOW_ALL_CATS)` and returns a success result.
 
 ### Help feature
 
@@ -502,10 +492,6 @@ Step 6. The user executes `clear`. Since `clear` is a destructive non-reversible
   * Pros: Will use less memory (e.g. for `delete`, just save the cat being deleted). Could support multi-level undo.
   * Cons: We must ensure that the implementation of each individual command is correct.
 
-### \[Proposed\] Data archiving
-
-_{Explain here how the data archiving feature will be implemented}_
-
 ---
 
 ## **Documentation, logging, testing, configuration, dev-ops**
@@ -537,8 +523,7 @@ Provides fast, CLI-optimized access to information of stray cats living in NUS c
 
 ### User stories
 
-Priorities:
-MVP - `* * * *`, High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
+Priorities: MVP - `* * * *`, High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
 
 | Priority   | As a …                            | I want to …                                                                                                 | So that I can…                                                                        |
@@ -631,13 +616,17 @@ MVP - `* * * *`, High (must have) - `* * *`, Medium (nice to have) - `* *`, Low 
 
   * 1i1. CatPals shows an error message: "Location must be no longer than 50 chars!".
     Use case ends.
-* 1j. The trait length exceeds 50 characters.
+* 1j. The user inputs duplicate location prefixes (e.g. `l/Utown l/Science`).
 
-  * 1j1. CatPals shows an error message: "Trait must be no longer than 50 chars!".
+  * 1j1. CatPals shows an error message: "Multiple values specified for the following single-valued field(s): l/".
     Use case ends.
-* 1k. The health status length exceeds 50 characters.
+* 1k. The trait length exceeds 50 characters.
 
-  * 1k1. CatPals shows an error message: "Health status must be no longer than 50 chars!".
+  * 1k1. CatPals shows an error message: "Trait must be no longer than 50 chars!".
+    Use case ends.
+* 1l. The health status length exceeds 50 characters.
+
+  * 1l1. CatPals shows an error message: "Health status must be no longer than 50 chars!".
     Use case ends.
 
 **Use case 2 (U2): Delete a cat**
@@ -995,7 +984,12 @@ Within each section, test cases are dependent on the test cases in the previous 
    4. Expected: validation error.
 
    
-4. Duplicate identity
+4. Location constraints
+   1. Test case: duplicate location prefixes (e.g. `add n/Brownie t/Friendly l/Utown l/Science`).
+   2. Expected: error message "Multiple values specified for the following single-valued field(s): l/".
+
+   
+5. Duplicate identity
    1. Add a cat, then add another with same name.
    2. Expected: duplicate-cat rejection.
 

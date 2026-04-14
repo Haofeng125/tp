@@ -14,10 +14,6 @@ public class ListCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Listed all cats";
 
-    public static final String MESSAGE_EXTRA_ARGS =
-            "list does not take extra parameters.\nDid you just mean: list";
-
-
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);

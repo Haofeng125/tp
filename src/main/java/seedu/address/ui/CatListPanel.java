@@ -73,16 +73,21 @@ public class CatListPanel extends UiPart<Region> {
         });
     }
 
-    /** Moves the selection one item down. */
+    /** Moves the selection one item down, stopping at the last item. */
     public void selectNext() {
-        catListView.getSelectionModel().selectNext();
-        catListView.scrollTo(catListView.getSelectionModel().getSelectedIndex());
+        int last = catListView.getItems().size() - 1;
+        if (catListView.getSelectionModel().getSelectedIndex() < last) {
+            catListView.getSelectionModel().selectNext();
+            catListView.scrollTo(catListView.getSelectionModel().getSelectedIndex());
+        }
     }
 
-    /** Moves the selection one item up. */
+    /** Moves the selection one item up, stopping at the first item. */
     public void selectPrevious() {
-        catListView.getSelectionModel().selectPrevious();
-        catListView.scrollTo(catListView.getSelectionModel().getSelectedIndex());
+        if (catListView.getSelectionModel().getSelectedIndex() > 0) {
+            catListView.getSelectionModel().selectPrevious();
+            catListView.scrollTo(catListView.getSelectionModel().getSelectedIndex());
+        }
     }
 
     /**
