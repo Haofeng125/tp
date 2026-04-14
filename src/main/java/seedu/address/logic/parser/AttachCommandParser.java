@@ -41,7 +41,7 @@ public class AttachCommandParser implements Parser<AttachCommand> {
             return parseReset(identifier);
         }
 
-        CatImage image = ParserUtil.parseImage(second);
+        CatImage image = ParserUtil.parseImage(second.replace('\\', '/'));
 
         // Try to parse identifier as index first, fall back to name
         try {
@@ -49,7 +49,7 @@ public class AttachCommandParser implements Parser<AttachCommand> {
             return new AttachCommand(index, image);
         } catch (ParseException ignored) {
             // If input looks like a number (e.g. 0, -1), it's an invalid index — not a name
-            if (trimmed.matches("-?\\d+")) {
+            if (identifier.matches("-?\\d+")) {
                 throw new ParseException(MESSAGE_INVALID_CAT_DISPLAYED_INDEX);
             }
             // Not a valid index — try as cat name
@@ -69,6 +69,9 @@ public class AttachCommandParser implements Parser<AttachCommand> {
             Index index = ParserUtil.parseIndex(identifier);
             return new AttachCommand(index);
         } catch (ParseException ignored) {
+            if (identifier.matches("-?\\d+")) {
+                throw new ParseException(MESSAGE_INVALID_CAT_DISPLAYED_INDEX);
+            }
             // Not a valid index — try as cat name
         }
 
