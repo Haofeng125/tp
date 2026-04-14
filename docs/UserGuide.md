@@ -250,6 +250,7 @@ For example: <code>t/long&nbsp;&nbsp;&nbsp;&nbsp;tail</code> is stored as `t/lon
 Additionally, if a name contains a word starting with `n/`, `t/`, `l/`, or `h/`, the command will be parsed incorrectly as these are reserved command prefixes. For example, `add n/Kitty t/friendly l/Home` would work, but `add n/Kitty t/friendly t/lover l/Home` is fine too — however, a name like `Tommy t/he Cat` would cause `t/he Cat` to be misinterpreted as a trait. If a cat's name contains such a sequence, please omit the `/`.
 
 </div>
+
 * `t/TRAIT` — you can specify up to 3 traits, but duplicate traits are not allowed. Maximum **50** characters per trait (counted after trimming).
 * `l/LOCATION` — maximum **50** characters (counted after trimming).
 * `h/HEALTH_STATUS` is optional. Common values include `Vaccinated`, `Neutered`, `Vaccinated and Neutered`, `Injured`, or `Healthy`. Defaults to `Unknown` if the `h/` prefix is omitted entirely. If `h/` is provided with an empty value (e.g., `h/`), the health status will be stored as blank. Maximum **50** characters (counted after trimming).
