@@ -631,13 +631,17 @@ MVP - `* * * *`, High (must have) - `* * *`, Medium (nice to have) - `* *`, Low 
 
   * 1i1. CatPals shows an error message: "Location must be no longer than 50 chars!".
     Use case ends.
-* 1j. The trait length exceeds 50 characters.
+* 1j. The user inputs duplicate location prefixes (e.g. `l/Utown l/Science`).
 
-  * 1j1. CatPals shows an error message: "Trait must be no longer than 50 chars!".
+  * 1j1. CatPals shows an error message: "Multiple values specified for the following single-valued field(s): l/".
     Use case ends.
-* 1k. The health status length exceeds 50 characters.
+* 1k. The trait length exceeds 50 characters.
 
-  * 1k1. CatPals shows an error message: "Health status must be no longer than 50 chars!".
+  * 1k1. CatPals shows an error message: "Trait must be no longer than 50 chars!".
+    Use case ends.
+* 1l. The health status length exceeds 50 characters.
+
+  * 1l1. CatPals shows an error message: "Health status must be no longer than 50 chars!".
     Use case ends.
 
 **Use case 2 (U2): Delete a cat**
@@ -995,7 +999,12 @@ Within each section, test cases are dependent on the test cases in the previous 
    4. Expected: validation error.
 
    
-4. Duplicate identity
+4. Location constraints
+   1. Test case: duplicate location prefixes (e.g. `add n/Brownie t/Friendly l/Utown l/Science`).
+   2. Expected: error message "Multiple values specified for the following single-valued field(s): l/".
+
+   
+5. Duplicate identity
    1. Add a cat, then add another with same name.
    2. Expected: duplicate-cat rejection.
 
